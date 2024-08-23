@@ -59,7 +59,15 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "silk_edge_clearance|130378200|157595600|16d173c6-79df-4749-9260-2c9b74158658|828828fe-a9de-4ec3-87b2-f26b55d52cb8",
+        "silk_edge_clearance|130378200|94095600|308edac6-8511-416d-a8f8-b6dfb51b4d96|00e5ece6-2aeb-4689-a86d-adeb1dfef4a4",
+        "silk_edge_clearance|130378200|94095600|308edac6-8511-416d-a8f8-b6dfb51b4d96|5701bbcf-274a-4e46-8184-7dcf421facd8",
+        "silk_edge_clearance|132918200|155055600|16d173c6-79df-4749-9260-2c9b74158658|a55f77f7-4949-47b3-9966-1f3f7995e05a",
+        "silk_edge_clearance|132918200|96635600|308edac6-8511-416d-a8f8-b6dfb51b4d96|3177db19-771c-4f7f-a81f-3c87542a23ca",
+        "silk_edge_clearance|82118200|155055600|68b903c6-ca4a-4f05-8b1c-5546dfaa35dc|b6294bd2-dc5d-475c-b3fa-504ad20a341b",
+        "silk_edge_clearance|84658200|94095600|68d2bc37-fe26-4596-a349-c41cb417bf22|e262091e-8ecc-4aa4-a06a-e04b8e94355c"
+      ],
       "meta": {
         "filename": "board_design_settings.json",
         "version": 2
@@ -132,7 +140,7 @@
         "min_microvia_drill": 0.1,
         "min_resolved_spokes": 2,
         "min_silk_clearance": 0.0,
-        "min_text_height": 0.8,
+        "min_text_height": 0.7493,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
         "min_track_width": 0.2,
@@ -522,8 +530,8 @@
       "gencad": "",
       "idf": "",
       "netlist": "SAO_Core4.net",
-      "plot": "",
-      "pos_files": "",
+      "plot": "SAO_Core4_V0.1_GERB_BOM_PNP/",
+      "pos_files": "SAO_Core4_V0.1_MANUFACTURING(QTY5)/",
       "specctra_dsn": "",
       "step": "",
       "svg": "",
@@ -549,12 +557,6 @@
       "exclude_dnp": false,
       "fields_ordered": [
         {
-          "group_by": false,
-          "label": "Reference",
-          "name": "Reference",
-          "show": true
-        },
-        {
           "group_by": true,
           "label": "Value",
           "name": "Value",
@@ -562,14 +564,26 @@
         },
         {
           "group_by": false,
+          "label": "Reference",
+          "name": "Reference",
+          "show": true
+        },
+        {
+          "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
           "label": "Footprint",
           "name": "Footprint",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
           "show": true
         },
         {
@@ -643,12 +657,6 @@
           "label": "Insert?",
           "name": "Insert?",
           "show": false
-        },
-        {
-          "group_by": false,
-          "label": "LCSC",
-          "name": "LCSC",
-          "show": true
         },
         {
           "group_by": false,
@@ -739,7 +747,7 @@
       "group_symbols": true,
       "name": "",
       "sort_asc": true,
-      "sort_field": "Reference"
+      "sort_field": "Footprint"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -779,7 +787,7 @@
       "workbook_filename": ""
     },
     "page_layout_descr_file": "",
-    "plot_directory": "Core64_LB_Outputs/",
+    "plot_directory": "SAO_Core4_V0.1_RENDERS_SCHEMATIC/",
     "spice_adjust_passive_values": false,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",

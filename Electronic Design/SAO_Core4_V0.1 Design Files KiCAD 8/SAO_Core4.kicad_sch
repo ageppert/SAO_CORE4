@@ -6,7 +6,7 @@
 	(paper "B")
 	(title_block
 		(title "SAO Core4")
-		(date "2024-08-14")
+		(date "2024-08-21")
 		(rev "0.1")
 		(company "Concept and design by Andy Geppert @ www.MachineIdeas.com")
 		(comment 2 "Visit www.Core64.io for information on assembly and optional features.")
@@ -6177,6 +6177,12 @@
 		(uuid "a5ed73b9-d312-4610-a143-62548f9129d4")
 	)
 	(junction
+		(at 261.62 92.71)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ab5d7ced-20f7-4773-8087-e93b5e5e4409")
+	)
+	(junction
 		(at 105.41 160.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6193,12 +6199,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b7e9c647-5cf5-4593-8607-a2dea99fd259")
-	)
-	(junction
-		(at 261.62 93.98)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b9f0cf9f-527a-43eb-ad9b-2a8417529eb0")
 	)
 	(junction
 		(at 172.72 220.98)
@@ -6317,7 +6317,7 @@
 		(uuid "17b758de-f25b-4bfa-ac26-a9e97eaffaf0")
 	)
 	(bus_entry
-		(at 175.26 175.26)
+		(at 175.26 171.45)
 		(size 2.54 -2.54)
 		(stroke
 			(width 0)
@@ -6360,6 +6360,15 @@
 			(type default)
 		)
 		(uuid "4a71e72f-1a21-458a-ae1b-82cc35d360d8")
+	)
+	(bus_entry
+		(at 175.26 182.88)
+		(size 2.54 -2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51ff34d0-3ab1-45fd-b6a0-865546ddeb8c")
 	)
 	(bus_entry
 		(at 93.98 218.44)
@@ -6639,6 +6648,16 @@
 	)
 	(wire
 		(pts
+			(xy 199.39 171.45) (xy 326.39 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "055ca306-6802-474a-a28a-398609616926")
+	)
+	(wire
+		(pts
 			(xy 168.91 223.52) (xy 180.34 223.52)
 		)
 		(stroke
@@ -6789,6 +6808,16 @@
 	)
 	(wire
 		(pts
+			(xy 311.15 203.2) (xy 311.15 245.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "129d2caa-a82f-4bab-b2a6-7da213060a6f")
+	)
+	(wire
+		(pts
 			(xy 50.8 133.35) (xy 50.8 135.89)
 		)
 		(stroke
@@ -6806,6 +6835,16 @@
 			(type default)
 		)
 		(uuid "135054f3-56c0-4b16-a71d-602131994d71")
+	)
+	(wire
+		(pts
+			(xy 271.78 92.71) (xy 278.13 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13f261ec-7df4-46cd-9540-903da1d04b6e")
 	)
 	(wire
 		(pts
@@ -6897,6 +6936,16 @@
 		)
 		(uuid "1c2bdec4-6013-431f-a16c-7bfda7cb9712")
 	)
+	(wire
+		(pts
+			(xy 261.62 92.71) (xy 264.16 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c4346e5-576b-40e6-8289-1bf37235c854")
+	)
 	(bus
 		(pts
 			(xy 148.59 213.36) (xy 148.59 215.9)
@@ -6976,6 +7025,16 @@
 			(type default)
 		)
 		(uuid "22ee386c-b2ab-4563-b64c-d51be9dc1419")
+	)
+	(wire
+		(pts
+			(xy 261.62 92.71) (xy 261.62 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23bb3e71-433c-4ab2-bfc1-9418a6974a63")
 	)
 	(wire
 		(pts
@@ -7179,7 +7238,7 @@
 	)
 	(bus
 		(pts
-			(xy 175.26 175.26) (xy 175.26 189.23)
+			(xy 175.26 171.45) (xy 175.26 182.88)
 		)
 		(stroke
 			(width 0)
@@ -7339,16 +7398,6 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 189.23) (xy 337.82 189.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3c9f9733-059c-48be-8bdf-ddae7c05aa3e")
-	)
-	(wire
-		(pts
 			(xy 312.42 53.34) (xy 312.42 57.15)
 		)
 		(stroke
@@ -7356,16 +7405,6 @@
 			(type default)
 		)
 		(uuid "3cfa3209-eb69-4395-b215-af6874e3bae9")
-	)
-	(wire
-		(pts
-			(xy 278.13 93.98) (xy 275.59 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d12891d-f36f-4352-aed0-c6b53212b549")
 	)
 	(wire
 		(pts
@@ -7569,6 +7608,16 @@
 	)
 	(wire
 		(pts
+			(xy 311.15 203.2) (xy 326.39 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45af5546-3ae3-4468-8de8-dc26c103c39e")
+	)
+	(wire
+		(pts
 			(xy 142.24 41.91) (xy 181.61 41.91)
 		)
 		(stroke
@@ -7586,6 +7635,16 @@
 			(type default)
 		)
 		(uuid "48e3dc9d-b706-43da-b76b-595de0a6152b")
+	)
+	(wire
+		(pts
+			(xy 330.2 189.23) (xy 337.82 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4905936b-a3b1-4428-b440-d7c73e662af2")
 	)
 	(wire
 		(pts
@@ -7709,16 +7768,6 @@
 	)
 	(wire
 		(pts
-			(xy 278.13 93.98) (xy 278.13 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4f8af0c1-8eb0-472a-bc63-28b130f66cc8")
-	)
-	(wire
-		(pts
 			(xy 312.42 142.24) (xy 312.42 146.05)
 		)
 		(stroke
@@ -7759,7 +7808,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 118.11) (xy 190.5 168.91)
+			(xy 190.5 118.11) (xy 190.5 165.1)
 		)
 		(stroke
 			(width 0)
@@ -7779,7 +7828,7 @@
 	)
 	(wire
 		(pts
-			(xy 302.26 172.72) (xy 302.26 222.25)
+			(xy 302.26 168.91) (xy 302.26 222.25)
 		)
 		(stroke
 			(width 0)
@@ -7879,7 +7928,7 @@
 	)
 	(wire
 		(pts
-			(xy 195.58 172.72) (xy 302.26 172.72)
+			(xy 195.58 168.91) (xy 302.26 168.91)
 		)
 		(stroke
 			(width 0)
@@ -8016,16 +8065,6 @@
 			(type default)
 		)
 		(uuid "5b85374f-0534-4318-a6f8-8b50368b65e0")
-	)
-	(wire
-		(pts
-			(xy 261.62 90.17) (xy 261.62 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5bea54f9-d47f-499c-beee-c83c14873d17")
 	)
 	(wire
 		(pts
@@ -8236,6 +8275,16 @@
 			(type default)
 		)
 		(uuid "67df2b00-83af-4ede-855c-8f9ace43bfba")
+	)
+	(bus
+		(pts
+			(xy 175.26 182.88) (xy 175.26 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "695645a6-fba8-4fd9-80b9-fe7d6366a9fa")
 	)
 	(wire
 		(pts
@@ -8479,6 +8528,16 @@
 	)
 	(wire
 		(pts
+			(xy 177.8 180.34) (xy 199.39 180.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "772a55a6-3354-461c-a343-f795f7278951")
+	)
+	(wire
+		(pts
 			(xy 387.35 96.52) (xy 387.35 80.01)
 		)
 		(stroke
@@ -8519,7 +8578,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 172.72) (xy 185.42 172.72)
+			(xy 177.8 168.91) (xy 185.42 168.91)
 		)
 		(stroke
 			(width 0)
@@ -8536,16 +8595,6 @@
 			(type default)
 		)
 		(uuid "7e9a7ab0-e439-479c-a47c-178f0269e3fd")
-	)
-	(wire
-		(pts
-			(xy 311.15 189.23) (xy 311.15 245.11)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f75e04d-b4bc-4676-b893-89c32b6f1417")
 	)
 	(wire
 		(pts
@@ -8829,6 +8878,16 @@
 	)
 	(wire
 		(pts
+			(xy 278.13 92.71) (xy 278.13 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90a38fec-7c3e-4647-bb03-60a25bfa0216")
+	)
+	(wire
+		(pts
 			(xy 242.57 232.41) (xy 242.57 240.03)
 		)
 		(stroke
@@ -9036,26 +9095,6 @@
 			(type default)
 		)
 		(uuid "9c2d42e6-400a-4ebb-8159-1d6480717c5a")
-	)
-	(wire
-		(pts
-			(xy 267.97 93.98) (xy 261.62 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d7caf2e-754a-41f8-b0d6-6cc1cdca735a")
-	)
-	(wire
-		(pts
-			(xy 261.62 93.98) (xy 261.62 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9de58850-369b-4b04-bfce-254f4f04d4c0")
 	)
 	(wire
 		(pts
@@ -9549,6 +9588,16 @@
 	)
 	(wire
 		(pts
+			(xy 261.62 90.17) (xy 261.62 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c4a9d2e1-7f2e-4e54-b00f-0375dfde69fc")
+	)
+	(wire
+		(pts
 			(xy 137.16 115.57) (xy 161.29 115.57)
 		)
 		(stroke
@@ -9789,6 +9838,16 @@
 	)
 	(wire
 		(pts
+			(xy 199.39 180.34) (xy 199.39 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3192cf8-c2af-4c4d-836e-cf420495e320")
+	)
+	(wire
+		(pts
 			(xy 50.8 133.35) (xy 74.93 133.35)
 		)
 		(stroke
@@ -9889,6 +9948,16 @@
 	)
 	(wire
 		(pts
+			(xy 326.39 194.31) (xy 326.39 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d98406ea-1ee2-43b0-9cdd-6541f1ad5e10")
+	)
+	(wire
+		(pts
 			(xy 167.64 209.55) (xy 172.72 209.55)
 		)
 		(stroke
@@ -9946,6 +10015,16 @@
 			(type default)
 		)
 		(uuid "dbca3bca-1e53-4cf5-9fa2-1d395e66974c")
+	)
+	(wire
+		(pts
+			(xy 326.39 171.45) (xy 326.39 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbfeed2c-a222-4708-9162-3d37d3dbdd6e")
 	)
 	(wire
 		(pts
@@ -11392,6 +11471,17 @@
 		)
 		(uuid "02c4cebb-1bec-4bbd-a853-7ac9d4fb18b4")
 	)
+	(label "SPARE_GPA6"
+		(at 312.42 203.2 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "04c3655a-77a9-41bd-8a0d-278e490028b9")
+	)
 	(label "GPIO2"
 		(at 77.47 233.68 0)
 		(fields_autoplaced yes)
@@ -11448,7 +11538,7 @@
 		(uuid "11d42005-8bfb-4b4b-8cac-5ba4a2a85871")
 	)
 	(label "YL1"
-		(at 290.83 100.33 0)
+		(at 307.34 100.33 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11502,17 +11592,6 @@
 		)
 		(uuid "1dedd6e3-cf94-4f5d-9b1c-3396f7ccb318")
 	)
-	(label "YL1"
-		(at 264.795 93.98 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "297a90bc-1af0-45c9-aadc-df0a439ed9ed")
-	)
 	(label "SCL"
 		(at 28.575 236.22 0)
 		(fields_autoplaced yes)
@@ -11535,7 +11614,7 @@
 		)
 		(uuid "2f96def4-f4dd-4ea0-9edd-1fc155a42173")
 	)
-	(label "CMDQ3N"
+	(label "CMDQ-3N"
 		(at 285.75 62.23 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11557,7 +11636,7 @@
 		)
 		(uuid "3205a703-8032-4978-8db6-ffa98548149f")
 	)
-	(label "CMDQ1N"
+	(label "CMDQ-1N"
 		(at 288.29 229.87 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11590,7 +11669,7 @@
 		)
 		(uuid "35af79dd-233d-4b0d-9563-0f8b7e5aa354")
 	)
-	(label "CMDQ{1N 1P 2N 2P 3N 3P 7N9P 7P9N}"
+	(label "CMDQ-{1N 1P 2N 2P 3N 3P 7N9P 7P9N}"
 		(at 237.49 165.1 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11612,7 +11691,7 @@
 		)
 		(uuid "37a37b70-22dd-46ce-9795-82bc269321e1")
 	)
-	(label "CMDQ7P9N"
+	(label "CMDQ-7P9N"
 		(at 232.41 44.45 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11689,7 +11768,7 @@
 		)
 		(uuid "544efeee-201e-4826-9024-c79f75547308")
 	)
-	(label "CMDQ1N"
+	(label "CMDQ-1N"
 		(at 232.41 153.67 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11711,7 +11790,7 @@
 		)
 		(uuid "5b655c67-8cfe-4a2d-9937-be936cccaef2")
 	)
-	(label "CMDQ3N"
+	(label "CMDQ-3N"
 		(at 288.29 240.03 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11723,7 +11802,7 @@
 		(uuid "5b860342-f2e0-468d-a04f-f81bf993e9fc")
 	)
 	(label "YL0"
-		(at 290.83 97.79 0)
+		(at 307.34 97.79 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11733,7 +11812,7 @@
 		)
 		(uuid "5bc33978-f246-44f4-8e07-e96f9ebe83c6")
 	)
-	(label "CMDQ7N9P"
+	(label "CMDQ-7N9P"
 		(at 287.02 207.01 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11766,6 +11845,17 @@
 		)
 		(uuid "62881a0f-d1b7-460e-9812-778c6730e9b8")
 	)
+	(label "YL1"
+		(at 273.05 92.71 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "632e3c89-b818-4eb0-8e1d-b73a4e80d7b2")
+	)
 	(label "SPARE_GPB7"
 		(at 317.5 224.79 0)
 		(fields_autoplaced yes)
@@ -11777,7 +11867,7 @@
 		)
 		(uuid "6ac049c1-163e-4998-a6dd-fc697bafd856")
 	)
-	(label "CMDQ7P9N"
+	(label "CMDQ-7P9N"
 		(at 287.02 209.55 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11788,7 +11878,7 @@
 		)
 		(uuid "780b9614-7e2a-4939-a3cc-caaac8486856")
 	)
-	(label "CMDQ2P"
+	(label "CMDQ-2P"
 		(at 288.29 237.49 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11821,7 +11911,7 @@
 		)
 		(uuid "7fd393ba-0cd0-452b-a713-6c05c8850cd6")
 	)
-	(label "CMDQ2P"
+	(label "CMDQ-2P"
 		(at 287.02 137.16 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11843,8 +11933,8 @@
 		)
 		(uuid "829920a7-4d9c-48fd-a1a1-be20f187c7a8")
 	)
-	(label "3V3"
-		(at 102.87 46.99 270)
+	(label "3V3_LDO"
+		(at 102.87 44.45 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11854,7 +11944,7 @@
 		)
 		(uuid "8762ef5a-ccc9-47d4-9d05-41be529c7c2a")
 	)
-	(label "CMDQ7N9P"
+	(label "CMDQ-7N9P"
 		(at 232.41 62.23 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11876,7 +11966,7 @@
 		)
 		(uuid "8e289fb6-cbf1-4b11-91db-0f57c7d4a0f1")
 	)
-	(label "CM_EN"
+	(label "SPARE_GPA6"
 		(at 288.29 245.11 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11898,7 +11988,7 @@
 		)
 		(uuid "93424a43-dd15-4c4f-ba66-e1d441a459a0")
 	)
-	(label "CMDQ{1N 1P 2N 2P 3N 3P 7N9P 7P9N}"
+	(label "CMDQ-{1N 1P 2N 2P 3N 3P 7N9P 7P9N}"
 		(at 229.87 74.93 90)
 		(fields_autoplaced yes)
 		(effects
@@ -11942,7 +12032,7 @@
 		)
 		(uuid "9a2f501d-25e6-4a93-a67d-a1180bb676f8")
 	)
-	(label "CMDQ3P"
+	(label "CMDQ-3P"
 		(at 288.29 242.57 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11975,7 +12065,7 @@
 		)
 		(uuid "9e321785-efdc-48fd-9ebe-be8af34f851a")
 	)
-	(label "CMDQ7N9P"
+	(label "CMDQ-7N9P"
 		(at 232.41 85.09 0)
 		(fields_autoplaced yes)
 		(effects
@@ -11986,7 +12076,7 @@
 		)
 		(uuid "9f53be73-027e-432c-84f9-bfe6b589f1ad")
 	)
-	(label "CMDQ3P"
+	(label "CMDQ-3P"
 		(at 285.75 44.45 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12041,7 +12131,7 @@
 		)
 		(uuid "b5199ca2-be24-43b9-be6c-a72d5a63655b")
 	)
-	(label "CMDQ2N"
+	(label "CMDQ-2N"
 		(at 288.29 234.95 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12052,7 +12142,7 @@
 		)
 		(uuid "bb4b3b4d-2d49-4156-a3e4-ad4c4193d8b0")
 	)
-	(label "CMDQ7P9N"
+	(label "CMDQ-7P9N"
 		(at 232.41 101.6 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12064,7 +12154,18 @@
 		(uuid "bbd7af79-78d1-4f8f-8092-f2493fca3919")
 	)
 	(label "GPIO1"
-		(at 179.07 172.72 0)
+		(at 317.5 171.45 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bbe3cb84-3b57-4b1e-a11d-ae4ed65ae4f7")
+	)
+	(label "GPIO2"
+		(at 179.07 168.91 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -12074,7 +12175,7 @@
 		)
 		(uuid "c70a1a61-ee02-440a-8cbf-9f3dcb538fe4")
 	)
-	(label "CMDQ1P"
+	(label "CMDQ-1P"
 		(at 288.29 232.41 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12129,7 +12230,7 @@
 		)
 		(uuid "d086bf99-9373-4baf-a63c-35655b741b1c")
 	)
-	(label "CMDQ2N"
+	(label "CMDQ-2N"
 		(at 287.02 153.67 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12162,6 +12263,17 @@
 		)
 		(uuid "dda3d942-bea5-4ed3-bdfd-e5474f3bedbd")
 	)
+	(label "GPIO1"
+		(at 179.07 180.34 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dead3058-81ca-4f32-8ad5-e7d35fbc984b")
+	)
 	(label "CM_SNS_RST"
 		(at 203.2 259.08 90)
 		(fields_autoplaced yes)
@@ -12184,7 +12296,7 @@
 		)
 		(uuid "e3e94db6-e198-494d-adf1-261db6f835b6")
 	)
-	(label "CMDQ1P"
+	(label "CMDQ-1P"
 		(at 232.41 137.16 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12196,7 +12308,7 @@
 		(uuid "e6167f9f-88f5-4263-9971-f35518209510")
 	)
 	(label "SPARE_GPB6"
-		(at 271.78 172.72 0)
+		(at 271.78 168.91 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -12699,7 +12811,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Andy_Footprint_Library:TestPoint_THTPad_D1.5mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.5x1.5mm"
 			(at 40.64 152.4 0)
 			(effects
 				(font
@@ -12795,6 +12907,15 @@
 			)
 		)
 		(property "Description" "Low-Power, Low-Offset Voltage, Dual Comparators, DIP-8/SOIC-8/TO-99-8"
+			(at 96.52 167.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C7955"
 			(at 96.52 167.64 0)
 			(effects
 				(font
@@ -13102,7 +13223,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0af2a066-58ec-4cd6-b091-7d88ef76a599")
-		(property "Reference" "JP24"
+		(property "Reference" "JP22"
 			(at 242.57 227.33 0)
 			(effects
 				(font
@@ -13163,7 +13284,7 @@
 		(instances
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "JP24")
+					(reference "JP22")
 					(unit 1)
 				)
 			)
@@ -13299,7 +13420,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Andy_Footprint_Library:TestPoint_THTPad_D1.5mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.5x1.5mm"
 			(at 114.3 142.24 0)
 			(effects
 				(font
@@ -15566,7 +15687,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3cdc3dd5-7a8f-419d-ac16-44a3a81f7021")
-		(property "Reference" "JP22"
+		(property "Reference" "JP21"
 			(at 138.938 238.252 0)
 			(effects
 				(font
@@ -15623,7 +15744,7 @@
 		(instances
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "JP22")
+					(reference "JP21")
 					(unit 1)
 				)
 			)
@@ -15683,6 +15804,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C7955"
+			(at 83.82 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "e2798ef2-e0b6-450e-8005-de257f83b969")
 		)
@@ -15711,6 +15841,79 @@
 			(project ""
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "U9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Jumper:SolderJumper_3_Bridged12")
+		(at 326.39 189.23 90)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "42524e49-a40c-4a94-aba7-e6b9e24597bd")
+		(property "Reference" "JP25"
+			(at 323.85 186.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CM_SNS_SEL"
+			(at 321.564 183.642 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Bridged12_Pad1.0x1.5mm"
+			(at 326.39 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 326.39 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "3-pole Solder Jumper, pins 1+2 closed/bridged"
+			(at 326.39 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "250d1547-d497-4a20-a489-9563e01d8c48")
+		)
+		(pin "2"
+			(uuid "91f05ad6-858b-4657-8705-5c0d78fc7a50")
+		)
+		(pin "3"
+			(uuid "afc78ca3-aa6f-4e3a-9cca-898fb72c5f55")
+		)
+		(instances
+			(project "SAO_Core4"
+				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
+					(reference "JP25")
 					(unit 1)
 				)
 			)
@@ -15786,7 +15989,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C17774"
+		(property "LCSC" "C17830"
 			(at 322.58 53.34 0)
 			(effects
 				(font
@@ -17308,7 +17511,7 @@
 	)
 	(symbol
 		(lib_id "Jumper:SolderJumper_3_Bridged12")
-		(at 190.5 172.72 0)
+		(at 190.5 168.91 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim yes)
@@ -17316,8 +17519,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5777b3c8-3a06-4b2d-8b27-1a3145712a3c")
-		(property "Reference" "JP21"
-			(at 187.96 175.26 0)
+		(property "Reference" "JP24"
+			(at 187.96 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17326,7 +17529,7 @@
 			)
 		)
 		(property "Value" "CM_SNS_SEL"
-			(at 184.912 177.546 0)
+			(at 184.912 173.736 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17335,7 +17538,7 @@
 			)
 		)
 		(property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Bridged12_Pad1.0x1.5mm"
-			(at 190.5 172.72 0)
+			(at 190.5 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17344,7 +17547,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 190.5 172.72 0)
+			(at 190.5 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17353,7 +17556,7 @@
 			)
 		)
 		(property "Description" "3-pole Solder Jumper, pins 1+2 closed/bridged"
-			(at 190.5 172.72 0)
+			(at 190.5 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17373,7 +17576,7 @@
 		(instances
 			(project "SAO_Core4"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "JP21")
+					(reference "JP24")
 					(unit 1)
 				)
 			)
@@ -17639,7 +17842,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Andy_Footprint_Library:TestPoint_THTPad_D1.5mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.5x1.5mm"
 			(at 114.3 137.16 0)
 			(effects
 				(font
@@ -17733,6 +17936,15 @@
 			)
 		)
 		(property "Description" "Low-Power, Low-Offset Voltage, Dual Comparators, DIP-8/SOIC-8/TO-99-8"
+			(at 83.82 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C7955"
 			(at 83.82 151.13 0)
 			(effects
 				(font
@@ -19812,6 +20024,109 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 267.97 92.71 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "91cf2a48-4938-4b81-a1bb-7ad9caaadade")
+		(property "Reference" "R7"
+			(at 267.97 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "8R2-5%"
+			(at 267.97 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 267.97 90.932 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "RES 6.8 OHM 1/8W 0805"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value_Modifier" "5%"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Insert?" "Yes"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C17830"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Populate" "yes"
+			(at 267.97 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4f9e1da2-db47-40f0-ac58-d98c8308ec4a")
+		)
+		(pin "2"
+			(uuid "8dcee490-f9fa-42ac-9655-3c9433908e5c")
+		)
+		(instances
+			(project "SAO_Core4"
+				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "ANDY_SYMBOL_LIBRARY:MMBT4401LT1G-Digikey-Transistors")
 		(at 309.88 153.67 0)
 		(unit 1)
@@ -20240,7 +20555,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_1206_3216Metric_ReverseMount_Hole1.8x2.4mm"
+		(property "Footprint" "Andy_Footprint_Library:LED_1206_3216Metric_RevMnt_Hole1.8x2.4mm_custom"
 			(at 377.19 105.41 0)
 			(effects
 				(font
@@ -21332,109 +21647,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 271.78 93.98 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "afb602b3-03c6-459f-b1df-9d93ea247eca")
-		(property "Reference" "R25"
-			(at 271.78 91.44 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "8R2-5%"
-			(at 271.78 96.52 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
-			(at 271.78 92.202 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "RES 6.8 OHM 1/8W 0805"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value_Modifier" "5%"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Insert?" "Yes"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C17774"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Populate" "yes"
-			(at 271.78 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b687aed8-8361-4f7d-a1e7-e1dc374d803d")
-		)
-		(pin "2"
-			(uuid "d139b4c8-5789-4a9d-81a4-830d50851fb6")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "R25")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 167.64 50.8 0)
 		(unit 1)
@@ -21745,7 +21957,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_1206_3216Metric_ReverseMount_Hole1.8x2.4mm"
+		(property "Footprint" "Andy_Footprint_Library:LED_1206_3216Metric_RevMnt_Hole1.8x2.4mm_custom"
 			(at 397.51 86.36 0)
 			(effects
 				(font
@@ -22646,7 +22858,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Andy_Footprint_Library:TestPoint_THTPad_D1.5mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.5x1.5mm"
 			(at 40.64 127 0)
 			(effects
 				(font
@@ -23099,7 +23311,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_1206_3216Metric_ReverseMount_Hole1.8x2.4mm"
+		(property "Footprint" "Andy_Footprint_Library:LED_1206_3216Metric_RevMnt_Hole1.8x2.4mm_custom"
 			(at 397.51 105.41 0)
 			(effects
 				(font
@@ -23193,7 +23405,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-3"
+		(property "Footprint" "digikey-footprints:SOT-23-3"
 			(at 39.37 39.37 0)
 			(effects
 				(font
@@ -23625,7 +23837,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_1206_3216Metric_ReverseMount_Hole1.8x2.4mm"
+		(property "Footprint" "Andy_Footprint_Library:LED_1206_3216Metric_RevMnt_Hole1.8x2.4mm_custom"
 			(at 377.19 86.36 0)
 			(effects
 				(font
