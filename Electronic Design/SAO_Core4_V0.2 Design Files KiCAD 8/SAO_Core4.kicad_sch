@@ -981,7 +981,7 @@
 				)
 			)
 		)
-		(symbol "ANDY_SYMBOL_LIBRARY:Connector_QWIIC_4x1_MP"
+		(symbol "ANDY_SYMBOL_LIBRARY:Connector_QWIIC_4x1_MP_P1.00"
 			(pin_names
 				(offset 1.016) hide)
 			(exclude_from_sim no)
@@ -1066,7 +1066,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "Connector_QWIIC_4x1_MP_1_1"
+			(symbol "Connector_QWIIC_4x1_MP_P1.00_1_1"
 				(rectangle
 					(start -1.27 -4.953)
 					(end 0 -5.207)
@@ -5770,126 +5770,6 @@
 				)
 			)
 		)
-		(symbol "power:VMEM"
-			(power)
-			(pin_numbers hide)
-			(pin_names
-				(offset 0) hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "VMEM"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"VMEM\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "VMEM_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "VMEM_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 	)
 	(bus_alias "CA_SHIFT_REGISTER_BUS"
 		(members "CM_SR_CLK" "CM_SR_LAT" "CM_SR_~{OE}" "CM_SR_SER1")
@@ -6205,6 +6085,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "bdfe427a-b8db-414c-aa59-7d018aead201")
+	)
+	(junction
+		(at 172.72 41.91)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bea104e0-c53a-49de-bd3c-522f6ea34f90")
 	)
 	(junction
 		(at 247.65 229.87)
@@ -6768,16 +6654,6 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 40.64) (xy 181.61 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0e8717f0-fe90-402d-8d86-bd9ef569c3f4")
-	)
-	(wire
-		(pts
 			(xy 278.13 100.33) (xy 320.04 100.33)
 		)
 		(stroke
@@ -7278,6 +7154,16 @@
 	)
 	(wire
 		(pts
+			(xy 309.88 129.54) (xy 312.42 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "35bbdc2f-2a92-416e-810e-e4609911918d")
+	)
+	(wire
+		(pts
 			(xy 234.95 113.03) (xy 234.95 104.14)
 		)
 		(stroke
@@ -7508,16 +7394,6 @@
 	)
 	(wire
 		(pts
-			(xy 312.42 38.1) (xy 312.42 39.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "40903b0e-beda-40f0-8033-ef179603c061")
-	)
-	(wire
-		(pts
 			(xy 377.19 80.01) (xy 377.19 82.55)
 		)
 		(stroke
@@ -7618,7 +7494,17 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 41.91) (xy 181.61 41.91)
+			(xy 172.72 41.91) (xy 181.61 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45efdcc5-791c-498b-bb5d-2c54187d376f")
+	)
+	(wire
+		(pts
+			(xy 142.24 41.91) (xy 172.72 41.91)
 		)
 		(stroke
 			(width 0)
@@ -7768,6 +7654,16 @@
 	)
 	(wire
 		(pts
+			(xy 261.62 80.01) (xy 261.62 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4fb8fce1-b20c-4f78-ba8e-32447d371e5a")
+	)
+	(wire
+		(pts
 			(xy 312.42 142.24) (xy 312.42 146.05)
 		)
 		(stroke
@@ -7868,16 +7764,6 @@
 	)
 	(wire
 		(pts
-			(xy 138.43 41.91) (xy 142.24 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5400a53a-5ac1-4831-8d71-327135b55956")
-	)
-	(wire
-		(pts
 			(xy 312.42 67.31) (xy 312.42 69.85)
 		)
 		(stroke
@@ -7888,7 +7774,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 41.91) (xy 118.11 41.91)
+			(xy 114.3 41.91) (xy 142.24 41.91)
 		)
 		(stroke
 			(width 0)
@@ -8085,6 +7971,16 @@
 			(type default)
 		)
 		(uuid "5c3388d0-fcc9-432c-a42f-4ff176a31618")
+	)
+	(wire
+		(pts
+			(xy 257.81 132.08) (xy 257.81 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5ca796b1-0e9a-4f0b-81e3-d985682320cf")
 	)
 	(wire
 		(pts
@@ -8756,6 +8652,16 @@
 		)
 		(uuid "89694b44-b573-45fb-9dc7-bfe940eb759d")
 	)
+	(wire
+		(pts
+			(xy 312.42 39.37) (xy 312.42 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8984b345-93b1-45a3-ba69-857a348cc0f4")
+	)
 	(bus
 		(pts
 			(xy 284.48 156.21) (xy 284.48 165.1)
@@ -9218,16 +9124,6 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 77.47) (xy 261.62 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a6b24e09-3d4b-4da2-9636-921c2648f6d5")
-	)
-	(wire
-		(pts
 			(xy 105.41 175.26) (xy 115.57 175.26)
 		)
 		(stroke
@@ -9365,6 +9261,16 @@
 			(type dash)
 		)
 		(uuid "b4a330cf-540b-4078-bcd2-ac5607709549")
+	)
+	(wire
+		(pts
+			(xy 309.88 36.83) (xy 312.42 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4f0156c-3ed4-4018-8d77-9bd22f877262")
 	)
 	(wire
 		(pts
@@ -9525,6 +9431,16 @@
 			(type default)
 		)
 		(uuid "be8edb32-bee2-4a1e-b3a7-85962bc7a0b3")
+	)
+	(wire
+		(pts
+			(xy 259.08 36.83) (xy 261.62 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf0eb204-b5af-4987-9b28-024ed51c4277")
 	)
 	(wire
 		(pts
@@ -9718,6 +9634,16 @@
 	)
 	(wire
 		(pts
+			(xy 259.08 74.93) (xy 261.62 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9c5a6a8-37ce-4d9a-b641-2c98b56af700")
+	)
+	(wire
+		(pts
 			(xy 335.28 229.87) (xy 331.47 229.87)
 		)
 		(stroke
@@ -9795,6 +9721,26 @@
 			(type default)
 		)
 		(uuid "cdafb121-9ca0-4fcd-bd3e-39f139429137")
+	)
+	(wire
+		(pts
+			(xy 312.42 132.08) (xy 312.42 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf681aff-3c34-4631-809f-0242144a5559")
+	)
+	(wire
+		(pts
+			(xy 255.27 129.54) (xy 257.81 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cfa38645-bf92-4660-8752-143c99b5a4e6")
 	)
 	(wire
 		(pts
@@ -10408,7 +10354,7 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 39.37) (xy 261.62 38.1)
+			(xy 261.62 39.37) (xy 261.62 36.83)
 		)
 		(stroke
 			(width 0)
@@ -10628,7 +10574,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 110.49) (xy 50.8 110.49)
+			(xy 48.26 110.49) (xy 50.8 110.49)
 		)
 		(stroke
 			(width 0)
@@ -11584,17 +11530,6 @@
 		)
 		(uuid "178092be-11e5-44ed-aaf5-6d1cd81294d2")
 	)
-	(label "VMEM"
-		(at 171.45 41.91 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1da13e0b-0d71-455e-a8db-acb89abd7d44")
-	)
 	(label "GPIO1"
 		(at 28.575 215.9 0)
 		(fields_autoplaced yes)
@@ -12455,6 +12390,28 @@
 	)
 	(global_label "3V3"
 		(shape input)
+		(at 259.08 74.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "25b562ac-0b63-4c3d-8641-3364a2b739f7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 253.2414 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape input)
 		(at 138.43 234.95 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12470,6 +12427,28 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape input)
+		(at 309.88 129.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "28569619-bbc4-4310-a378-99105abfedd4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 304.0414 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -12539,6 +12518,28 @@
 			)
 		)
 	)
+	(global_label "3V3"
+		(shape input)
+		(at 309.88 36.83 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "46386699-0a1b-4c67-ac53-a2f558c890c3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 304.0414 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GMEM"
 		(shape input)
 		(at 314.96 69.85 0)
@@ -12577,6 +12578,28 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape input)
+		(at 255.27 129.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7833fe6b-3a26-45ea-ae48-2c52c5c5e7dd")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 249.4314 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -12648,7 +12671,7 @@
 	)
 	(global_label "3V3"
 		(shape input)
-		(at 49.53 110.49 180)
+		(at 48.26 110.49 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -12658,7 +12681,7 @@
 		)
 		(uuid "889b3564-5334-4e6d-a782-4badbf9b1233")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 3.81 73.66 0)
+			(at 2.54 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12691,7 +12714,7 @@
 	)
 	(global_label "3V3"
 		(shape output)
-		(at 118.11 41.91 0)
+		(at 181.61 41.91 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -12701,7 +12724,7 @@
 		)
 		(uuid "cfec8d5b-25a1-4037-87cf-b12984be65d0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 123.9418 41.8306 0)
+			(at 187.4418 41.8306 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12755,6 +12778,28 @@
 			)
 		)
 	)
+	(global_label "3V3"
+		(shape input)
+		(at 259.08 36.83 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ed13025c-6664-4d8b-9c6d-de566d536b20")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 253.2414 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GMEM"
 		(shape input)
 		(at 264.16 110.49 0)
@@ -12773,27 +12818,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "3V3"
-		(shape input)
-		(at 138.43 41.91 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "fb2e98ef-4ef8-40f1-9726-436cb54a24a2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 118.11 -138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
 				(hide yes)
 			)
 		)
@@ -13158,71 +13182,6 @@
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "R55")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VMEM")
-		(at 312.42 132.08 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "08ebad43-3290-46fa-9cb2-67c0f6df7e7c")
-		(property "Reference" "#PWR0145"
-			(at 312.42 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 312.801 127.6858 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 312.42 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 312.42 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 312.42 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0b1cbe57-7895-43d6-92b4-dd61db51a6fe")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0145")
 					(unit 1)
 				)
 			)
@@ -14981,71 +14940,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:VMEM")
-		(at 261.62 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "2dfd8986-e60f-474d-a835-4850689e17b7")
-		(property "Reference" "#PWR0103"
-			(at 261.62 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 261.874 34.925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 261.62 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 261.62 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 261.62 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e64b8310-08bc-4141-91b4-f7841287743d")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0103")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 154.94 50.8 0)
 		(unit 1)
@@ -16096,6 +15990,71 @@
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "#PWR010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ANDY_SYMBOL_LIBRARY:PWR_FLAG")
+		(at 172.72 41.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "48905e12-fea5-4eda-a9d7-87fcb6e192ab")
+		(property "Reference" "#FLG02"
+			(at 172.72 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 172.72 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 172.72 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 172.72 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 172.72 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7f48a066-a8c4-4348-9e52-85ed33decaa0")
+		)
+		(instances
+			(project "SAO_Core4"
+				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)
@@ -18056,103 +18015,6 @@
 			(project ""
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "L1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "ANDY_SYMBOL_LIBRARY:Connector_QWIIC_4x1_MP")
-		(at 120.65 220.98 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "63ce1416-ae7f-462d-b525-836d2dcbe95f")
-		(property "Reference" "X9"
-			(at 120.65 226.822 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "QWIIC"
-			(at 120.65 212.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal"
-			(at 120.65 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 120.65 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 120.65 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C160404"
-			(at 120.65 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Populate" "yes"
-			(at 120.65 220.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "eaa2a4e8-0ad9-409d-a02a-1db459c73039")
-		)
-		(pin "3"
-			(uuid "b98a565f-7c33-45c1-8129-bab5a7ee6bdd")
-		)
-		(pin "MP"
-			(uuid "b3aceab9-f707-4362-bbb0-64881d6d8174")
-		)
-		(pin "2"
-			(uuid "177f4831-279d-43e0-917d-fb291d89a9a2")
-		)
-		(pin "4"
-			(uuid "a9553f57-973c-4e2c-bdf2-c2ba83dad4b1")
-		)
-		(pin "MP"
-			(uuid "4103bb40-b2a8-41b3-ac2e-7b83f580996d")
-		)
-		(instances
-			(project ""
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "X9")
 					(unit 1)
 				)
 			)
@@ -21422,71 +21284,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:VMEM")
-		(at 181.61 40.64 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a88aa12c-8cb8-4ac5-8fe1-95a3ae0e577d")
-		(property "Reference" "#PWR0127"
-			(at 181.61 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 181.61 37.084 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 181.61 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 181.61 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 181.61 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f98bc65d-db3c-4503-bd8c-982f8f26de56")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0127")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 142.24 50.8 0)
 		(unit 1)
@@ -22111,71 +21908,6 @@
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "JP3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VMEM")
-		(at 312.42 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b6c3b55b-17bb-4f94-a20a-f9f174605b4e")
-		(property "Reference" "#PWR0105"
-			(at 312.42 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 312.801 33.7058 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 312.42 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 312.42 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 312.42 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b900ef86-8b8b-46a9-933b-21720aa4379d")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0105")
 					(unit 1)
 				)
 			)
@@ -23510,6 +23242,103 @@
 		)
 	)
 	(symbol
+		(lib_id "ANDY_SYMBOL_LIBRARY:Connector_QWIIC_4x1_MP_P1.00")
+		(at 120.65 220.98 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e2bb932c-ee87-43c4-a0a8-bc62e6b9b870")
+		(property "Reference" "X3"
+			(at 120.396 213.106 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "QWIIC"
+			(at 120.904 226.568 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal"
+			(at 120.65 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 120.65 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 120.65 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C160404"
+			(at 120.65 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Populate" "yes"
+			(at 120.65 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "00b1894e-f051-4032-9a98-5bb678599770")
+		)
+		(pin "MP"
+			(uuid "d48c63df-73c1-49ef-a8f6-8eebd3a740b6")
+		)
+		(pin "3"
+			(uuid "0ac5e576-3636-4b46-b758-3004cd663448")
+		)
+		(pin "2"
+			(uuid "0adc90cf-3693-4b9d-85f9-681ae75eecee")
+		)
+		(pin "MP"
+			(uuid "942f9134-c7b3-4ba2-9cee-091931c59062")
+		)
+		(pin "1"
+			(uuid "dcaf4236-b5f5-43af-bfe5-4ed5a599f9ee")
+		)
+		(instances
+			(project ""
+				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
+					(reference "X3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 93.98 116.84 0)
 		(unit 1)
@@ -23915,136 +23744,6 @@
 			(project "Core4 SAO"
 				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
 					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VMEM")
-		(at 257.81 132.08 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f4f073b4-eca5-4aa5-a5b0-d7adf2e15475")
-		(property "Reference" "#PWR0144"
-			(at 257.81 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 258.191 127.6858 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 257.81 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 257.81 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 257.81 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "61d3108b-6af9-41f4-817d-7dc1c3d8e3a6")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0144")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VMEM")
-		(at 261.62 77.47 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f808389d-1bcc-42a9-b6a1-d2c16f36ee95")
-		(property "Reference" "#PWR0152"
-			(at 261.62 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VMEM"
-			(at 262.001 73.0758 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 261.62 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 261.62 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VMEM\""
-			(at 261.62 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "97239b7b-a7e0-4667-a87f-07cdd09cd23b")
-		)
-		(instances
-			(project "Core4 SAO"
-				(path "/4ac2dd59-cc2d-481f-806f-f2464072bc90"
-					(reference "#PWR0152")
 					(unit 1)
 				)
 			)
