@@ -264,10 +264,14 @@ void loop()
   switch(TopLevelMode) {
     case MODE_INIT: {
       SerialInit();
+      Serial.println(">>> Entered MODE_INIT.");
       IOExpanderInit();
       SAOSensePinInit();
-      Serial.println("Welcome to SAO Core4 Demo with Arduino IDE 2.3.2 using RP2040-Zero!");
-      Serial.println(">>> Entered MODE_INIT.");
+      Serial.println("");
+      Serial.println("  |-------------------------------------------------------------------------| ");
+      Serial.println("  | Welcome to the SAO Core4 Demo with Arduino IDE 2.3.2 using RP2040-Zero! | ");
+      Serial.println("  |-------------------------------------------------------------------------| ");
+      Serial.println("");
       ModeTimeOutCheckReset(); 
       TopLevelMode = MODE_DAZZLE;
       Serial.println(">>> Leaving MODE_INIT.");
@@ -295,8 +299,7 @@ void loop()
       if (ModeTimeOutCheck(3000)){ 
         ModeTimeOutCheckReset();
         for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
-        LEDUpdate(); 
-        IOExpanderSafeStates();
+        LEDUpdate();
         TopLevelMode = MODE_FLUX_TEST; 
         Serial.println(">>> Leaving MODE_DAZZLE.");
       }
@@ -305,7 +308,7 @@ void loop()
     case MODE_FLUX_TEST: {
       if (ModeTimeoutFirstTimeRun) { 
         Serial.println(">>> Entered MODE_FLUX_TEST."); 
-        ModeTimeOutCheckReset(); 
+        // ModeTimeOutCheckReset(); 
         ModeTimeoutFirstTimeRun = false;
         IOExpanderSafeStates();
         }
@@ -329,7 +332,17 @@ void loop()
     }
 
     case MODE_GAME_OF_MEMORY: {
-      if (ModeTimeoutFirstTimeRun) { Serial.println(">>> Entered MODE_GAME_OF_MEMORY."); ModeTimeOutCheckReset(); ModeTimeoutFirstTimeRun = false; }
+      if (ModeTimeoutFirstTimeRun) { 
+        Serial.println(">>> Entered MODE_GAME_OF_MEMORY."); 
+        //ModeTimeOutCheckReset(); 
+        ModeTimeoutFirstTimeRun = false; 
+        IOExpanderSafeStates();
+      }
+
+
+
+
+      
       break;
     }
 
