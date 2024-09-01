@@ -23,10 +23,9 @@
     SAO I2C Pins are connected to the GPIO expander MCP23017 SDA and SCL pins
       All MCP23017 pins are configured as output.
 
-  Default IO accessed by SAO GPIO pins, directly
-    SAO_GPIO1 = unused, available
-    SAO_GPIO2 = INPUT Core Matrix Sense, default low, unsensed
-
+    Default IO accessed by SAO GPIO pins, directly
+      SAO_GPIO1 = unused, available
+      SAO_GPIO2 = INPUT Core Matrix Sense, default low, unsensed
 */
 
 #define HARDWARE_VERSION_MAJOR  0
@@ -52,27 +51,23 @@
 static bool LEDArray[4] = { 0, 0, 0, 0};    // Default all four LEDs off.
 uint8_t IOPortBLEDArrayStartBit = 2;
 uint8_t IOPortAInactive = 0b00101010;
-/*                          ||||||||
-                            ||||||||__GPA0 : COLUMN Core Matrix Drive Transistor CMDQ-1N, XB0, default low, inactive
+/*                          ||||||||__GPA0 : COLUMN Core Matrix Drive Transistor CMDQ-1N, XB0, default low, inactive
                             |||||||___GPA1 : COLUMN Core Matrix Drive Transistor CMDQ-1P, XB0, default high, inactive
                             ||||||____GPA2 : COLUMN Core Matrix Drive Transistor CMDQ-2N, XB1, default low, inactive
                             |||||_____GPA3 : COLUMN Core Matrix Drive Transistor CMDQ-2P, XB1, default high, inactive
                             ||||______GPA4 : COLUMN Core Matrix Drive Transistor CMDQ-3N, XT0,1, default low, inactive
                             |||_______GPA5 : COLUMN Core Matrix Drive Transistor CMDQ-3P, XT0,1, default high, inactive
                             ||________GPA6 : Core Matrix Enable, default low, inactive
-                            |_________GPA7 : Core Matrix Sense Reset, default low, inactive
-*/
+                            |_________GPA7 : Core Matrix Sense Reset, default low, inactive */
 uint8_t IOPortBInactive = 0b10000010;
-/*
-    GPB0 : ROW Core Matrix Drive Transistor CMDQ-7N, YL0, default low, inactive
-    GPB1 : ROW Core Matrix Drive Transistor CMDQ-7P, YL0, default high, inactive
-    GPB2 : LED_1 / Pixel 0, default low, inactive
-    GPB3 : LED_2 / Pixel 1, default low, inactive
-    GPB4 : LED_3 / Pixel 2, default low, inactive
-    GPB5 : LED_4 / Pixel 3, default low, inactive
-    GPB6 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive
-    GPB7 : ROW Core Matrix Drive Transistor CMDQ-9N, YL1, default low, inactive
-*/
+/*                          ||||||||__GPB0 : ROW Core Matrix Drive Transistor CMDQ-7N, YL0, default low, inactive
+                            |||||||___GPB1 : ROW Core Matrix Drive Transistor CMDQ-7P, YL0, default high, inactive
+                            ||||||____GPB2 : LED_1 / Pixel 0, default low, inactive
+                            |||||_____GPB3 : LED_2 / Pixel 1, default low, inactive
+                            ||||______GPB4 : LED_3 / Pixel 2, default low, inactive
+                            |||_______GPB5 : LED_4 / Pixel 3, default low, inactive
+                            ||________GPB6 : ROW Core Matrix Drive Transistor CMDQ-9N, YL1, default low, inactive
+                            |_________GPB7 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive */
 uint8_t IOPortA = IOPortAInactive;
 uint8_t IOPortB = IOPortBInactive;
 
@@ -109,6 +104,8 @@ void IOExpanderSafeStates() {
   Wire.beginTransmission(IO_EXPANDER_ADDRESS);
   Wire.write(IO_EXPANDER_REG_PORTA_DATA);
   Wire.write(IOPortAInactive);
+  Wire.endTransmission();
+  Wire.beginTransmission(IO_EXPANDER_ADDRESS);
   Wire.write(IO_EXPANDER_REG_PORTB_DATA);
   Wire.write(IOPortBInactive);
   Wire.endTransmission();
@@ -125,6 +122,8 @@ bool IOExpanderInit() {
   Wire.beginTransmission(IO_EXPANDER_ADDRESS);
   Wire.write(IO_EXPANDER_REG_PORTA_DIR);
   Wire.write(0x00);
+  Wire.endTransmission();
+  Wire.beginTransmission(IO_EXPANDER_ADDRESS);
   Wire.write(IO_EXPANDER_REG_PORTB_DIR);
   Wire.write(0x00);
   Wire.endTransmission();
@@ -206,6 +205,7 @@ void loop()
         ModeTimeOutCheckReset();
         for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
         LEDUpdate(); 
+        IOExpanderSafeStates();
         TopLevelMode = MODE_FLUX_TEST; 
         Serial.println(">>> Leaving MODE_DAZZLE.");
       }
@@ -216,7 +216,7 @@ void loop()
         Serial.println(">>> Entered MODE_FLUX_TEST."); 
         ModeTimeOutCheckReset(); 
         ModeTimeoutFirstTimeRun = false;
-        // IOExpanderSafeStates();
+        IOExpanderSafeStates();
         }
 
 
