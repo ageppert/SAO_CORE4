@@ -72,7 +72,7 @@ uint8_t IOPortBInactive = 0b10000010;
                             |_________GPB7 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive */
 uint8_t IOPortA = IOPortAInactive;
 uint8_t IOPortB = IOPortBInactive;
-#define PIN_SAO_GPIO_1        26      // Set up and use for whatever you want.
+#define PIN_SAO_GPIO_1_MODE   26      // Configured as input for mode switching or general user use.
 #define PIN_SAO_GPIO_2_SENSE  27      // Configured as input for sensing the core flip.
 bool CMSenseArray[4] = {0,0,0,0};     // Store the most recent sense signal status for each core.
 // These arrays set the row and column transistors correctly to address a given pixel with current in the correct direction.
@@ -127,7 +127,7 @@ enum TopLevelMode                       // Top Level Mode State Machine
   MODE_AT_THE_END_OF_TIME
 } ;
 uint8_t  TopLevelMode = MODE_INIT;
-uint8_t  TopLevelModeDefault = MODE_GAME_OF_MEMORY;
+uint8_t  TopLevelModeDefault = MODE_DAZZLE;
 uint32_t ModeTimeoutDeltams = 0;
 uint32_t ModeTimeoutFirstTimeRun = true;
 
@@ -179,8 +179,9 @@ bool IOExpanderInit() {
   return StatusIOExpander;
 }
 
-void SAOSensePinInit (){
+void SAOGPIOPinInit (){
   pinMode(PIN_SAO_GPIO_2_SENSE, INPUT);
+  pinMode(PIN_SAO_GPIO_1_MODE, INPUT_PULLUP);
 }
 
 void ModeTimeOutCheckReset () {
@@ -284,7 +285,7 @@ void loop()
       SerialInit();
       Serial.println(">>> Entered MODE_INIT.");
       IOExpanderInit();
-      SAOSensePinInit();
+      SAOGPIOPinInit();
       Serial.println("");
       Serial.println("  |-------------------------------------------------------------------------| ");
       Serial.println("  | Welcome to the SAO Core4 Demo with Arduino IDE 2.3.2 using RP2040-Zero! | ");
@@ -295,6 +296,7 @@ void loop()
       Serial.println(">>> Leaving MODE_INIT.");
       break;
     }
+
     case MODE_DAZZLE: {
       if (ModeTimeoutFirstTimeRun) { Serial.println(">>> Entered MODE_DAZZLE."); }
       static uint8_t PixelToTurnOn = 0;
@@ -323,6 +325,7 @@ void loop()
       }
       break;
     }
+
     case MODE_FLUX_TEST: {
       if (ModeTimeoutFirstTimeRun) { 
         Serial.println(">>> Entered MODE_FLUX_TEST."); 
@@ -344,14 +347,19 @@ void loop()
       LEDUpdate(); 
       delay(25);
 
-      if (ModeTimeOutCheck(5000)){ 
+      if (ModeTimeOutCheck(15000)){ 
         ModeTimeOutCheckReset();
         for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
         LEDUpdate();
         TopLevelMode = MODE_GAME_OF_MEMORY; 
         Serial.println(">>> Leaving MODE_FLUX_TEST.");
       }
-      // TODO: Check for SAO GPIO1 to go high and move to MODE_GAME_OF_MEMORY
+      
+      // Check for SAO GPIO1 to go low and move to another mode.
+      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ){
+        Serial.println("Mode changed!");
+        TopLevelMode = MODE_GAME_OF_MEMORY;
+      }
       break;
     }
 
@@ -374,9 +382,9 @@ void loop()
       static bool      CoreMemoryIsReleased  = true;        // Register a release
       static bool      CoreMemoryJustReleased = false;      // Register JUST released for one time use
       static uint16_t  CoreMemoryIsReleasedDebounce = 0;    // Keep track of how many times through this state the core is not touched.
-      static uint16_t  CoreMemoryIsReleasedThresh = 5;     // How many times through the loop to register cores as not touched.
+      static uint16_t  CoreMemoryIsReleasedThresh = 3;     // How many times through the loop to register cores as not touched.
       // static bool      GameOKtoProceedToSeqStep   = false;  // Flag to indicate the correct core was touched in the sequence and move forward.
-
+      
       if (ModeTimeoutFirstTimeRun) { 
         Serial.println(">>> Entered MODE_GAME_OF_MEMORY."); 
         ModeTimeoutFirstTimeRun = false; 
@@ -404,23 +412,24 @@ void loop()
           CoreMemoryJustReleased = false;  
           CoreMemoryIsReleasedDebounce = 0;
           GameMemoryTestStepWrong = false;
-          // Twinkle the LEDs
-          for (uint8_t i = 0; i <= 50; i++) {
+          // Twinkle the LEDs (moved down into the randomizer)
+/*         for (uint8_t i = 0; i <= 50; i++) {
             PixelToTurnOn = random(0, 4);
             // Update the LED array
             for (uint8_t j = 0; j < 4; j++) {
               if (PixelToTurnOn == j) { LEDArray[j] = 1; }
               else                    { LEDArray[j] = 0; }
             }
-          LEDUpdate();        
-          delay(20);
-          LEDClear();
-          LEDUpdate();
-          delay(10);
+            LEDUpdate();        
+            delay(20);
+            LEDClear();
+            LEDUpdate();
+            delay(10);
           }
           LEDClear();
           LEDUpdate();
-          delay(1000);
+          delay(500);
+*/
           GameMemoryState = 1;
           break;
         }
@@ -432,7 +441,20 @@ void loop()
           LEDUpdate();
           for (uint8_t i = 0; i < GameMemorySequenceLength; i++) {
             GameMemorySequenceArray[i] = random(0, 4);
+            // Update the LED array
+            for (uint8_t j = 0; j < 4; j++) {
+              if (GameMemorySequenceArray[i] == j) { LEDArray[j] = 1; }
+              else                    { LEDArray[j] = 0; }
+            }
+            LEDUpdate();      
+            delay(20);
+            LEDClear();
+            LEDUpdate();
+            delay(2);
           }
+          LEDClear();
+          LEDUpdate();
+          delay(500);
           GameMemoryState = 2;
           break; 
         }
@@ -572,10 +594,17 @@ void loop()
           GameMemoryState = 0;
           break; 
           }
+        
         default: { 
           Serial.println(">>> Invalid state in MODE_GAME_OF_MEMORY."); 
           break; 
           }
+      }
+
+      // Check for SAO GPIO1 to go low and move to another mode.
+      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ) {
+        Serial.println("Mode changed!");
+        TopLevelMode = MODE_GAME_OF_MEMORY;
       }
       break;
     }
