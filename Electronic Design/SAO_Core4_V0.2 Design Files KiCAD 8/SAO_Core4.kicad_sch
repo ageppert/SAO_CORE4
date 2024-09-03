@@ -10125,7 +10125,7 @@
 	)
 	(text "Shift LED connections up 2 pins, tying B3/4  to 7N/7P. \nThe order will look cleaner, and LED pixel numbering will match GPB numbers."
 		(exclude_from_sim no)
-		(at 302.514 215.392 0)
+		(at 306.578 293.37 0)
 		(effects
 			(font
 				(face "KiCad Font")

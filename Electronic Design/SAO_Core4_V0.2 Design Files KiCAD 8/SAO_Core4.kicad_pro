@@ -59,14 +59,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        "silk_edge_clearance|130378200|157595600|16d173c6-79df-4749-9260-2c9b74158658|828828fe-a9de-4ec3-87b2-f26b55d52cb8",
-        "silk_edge_clearance|130378200|94095600|308edac6-8511-416d-a8f8-b6dfb51b4d96|00e5ece6-2aeb-4689-a86d-adeb1dfef4a4",
-        "silk_edge_clearance|130378200|94095600|308edac6-8511-416d-a8f8-b6dfb51b4d96|5701bbcf-274a-4e46-8184-7dcf421facd8",
-        "silk_edge_clearance|132918200|155055600|16d173c6-79df-4749-9260-2c9b74158658|a55f77f7-4949-47b3-9966-1f3f7995e05a",
-        "silk_edge_clearance|82118200|155055600|68b903c6-ca4a-4f05-8b1c-5546dfaa35dc|b6294bd2-dc5d-475c-b3fa-504ad20a341b",
-        "silk_edge_clearance|84658200|94095600|68d2bc37-fe26-4596-a349-c41cb417bf22|e262091e-8ecc-4aa4-a06a-e04b8e94355c"
-      ],
+      "drc_exclusions": [],
       "meta": {
         "filename": "board_design_settings.json",
         "version": 2
@@ -786,7 +779,7 @@
       "workbook_filename": ""
     },
     "page_layout_descr_file": "",
-    "plot_directory": "SAO_Core4_V0.1_RENDERS_SCHEMATIC/",
+    "plot_directory": "../SAO_Core4_V0.2 Schematic and Renders/",
     "spice_adjust_passive_values": false,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
