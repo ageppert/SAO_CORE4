@@ -77,6 +77,7 @@ uint8_t IOPortB = IOPortBInactive;
 bool CMSenseArray[4] = {0,0,0,0};     // Store the most recent sense signal status for each core.
 // These arrays set the row and column transistors correctly to address a given pixel with current in the correct direction.
 // Pixel is 0 to 3. Value is 0 or 1. The value of 1 is arbitrarily defined by upper left Pixel 0 core with both wires + in upper left.
+// CMDColPA = Core Matrix Drive Columns on Port A
 static uint8_t CMDColPA[4][2] = {
 //{0b00101010, 0b00101010}, default reference for each transistor to be inactive
   {0b00111000, 0b00001011}, 
@@ -126,7 +127,7 @@ enum TopLevelMode                       // Top Level Mode State Machine
   MODE_AT_THE_END_OF_TIME
 } ;
 uint8_t  TopLevelMode = MODE_INIT;
-uint8_t  TopLevelModeDefault = MODE_DAZZLE;
+uint8_t  TopLevelModeDefault = MODE_GAME_OF_MEMORY;
 uint32_t ModeTimeoutDeltams = 0;
 uint32_t ModeTimeoutFirstTimeRun = true;
 
@@ -218,6 +219,14 @@ void LEDUpdate() {
   Wire.endTransmission();
 }
 
+void LEDClear() {
+  for (uint8_t j = 0; j < 4; j++) { LEDArray[j] = 0; }
+}
+
+void LEDFill() {
+  for (uint8_t j = 0; j < 4; j++) { LEDArray[j] = 1; }
+}
+
 void PortAUpdate (uint8_t data) {
   Wire.beginTransmission(IO_EXPANDER_ADDRESS);
   Wire.write(IO_EXPANDER_REG_PORTA_DATA);
@@ -236,6 +245,15 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
   // Set up row and column transistors
   IOPortA = CMDColPA[pixel][value];
   IOPortB = CMDRowPB[pixel][value];
+  // Copy in the LED array status in Port to avoid just shutting them off.
+  for (uint8_t j = 0; j < 4; j++) { 
+    if (LEDArray[j]) {
+      IOPortB |=  (1 << (IO_PB_LED_ARRAY_START_BIT+j));   // Set the bit at position to 1
+    }
+    else {
+      IOPortB &= ~(1 << (IO_PB_LED_ARRAY_START_BIT+j));  // Clear the bit at position to 0
+    }
+  }
   // Reset the sense latch (high)
   IOPortA |=  (1 << IO_PA_SENSE_RESET_BIT);   // Set the bit at position to 1
   // Send it
@@ -273,7 +291,7 @@ void loop()
       Serial.println("  |-------------------------------------------------------------------------| ");
       Serial.println("");
       ModeTimeOutCheckReset(); 
-      TopLevelMode = MODE_DAZZLE;
+      TopLevelMode = TopLevelModeDefault;
       Serial.println(">>> Leaving MODE_INIT.");
       break;
     }
@@ -298,9 +316,9 @@ void loop()
 
       if (ModeTimeOutCheck(3000)){ 
         ModeTimeOutCheckReset();
-        for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
+        LEDClear();
         LEDUpdate();
-        TopLevelMode = MODE_FLUX_TEST; 
+        TopLevelMode++; 
         Serial.println(">>> Leaving MODE_DAZZLE.");
       }
       break;
@@ -308,7 +326,6 @@ void loop()
     case MODE_FLUX_TEST: {
       if (ModeTimeoutFirstTimeRun) { 
         Serial.println(">>> Entered MODE_FLUX_TEST."); 
-        // ModeTimeOutCheckReset(); 
         ModeTimeoutFirstTimeRun = false;
         IOExpanderSafeStates();
         }
@@ -327,22 +344,239 @@ void loop()
       LEDUpdate(); 
       delay(25);
 
+      if (ModeTimeOutCheck(5000)){ 
+        ModeTimeOutCheckReset();
+        for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
+        LEDUpdate();
+        TopLevelMode = MODE_GAME_OF_MEMORY; 
+        Serial.println(">>> Leaving MODE_FLUX_TEST.");
+      }
       // TODO: Check for SAO GPIO1 to go high and move to MODE_GAME_OF_MEMORY
       break;
     }
 
     case MODE_GAME_OF_MEMORY: {
+      #define GAME_MEMORY_SEQUENCE_MAX_LENGTH 255
+      static uint8_t GameMemoryState = 0;                 // Game state machine
+      static uint8_t GameMemorySequenceLength = GAME_MEMORY_SEQUENCE_MAX_LENGTH-1;        // Maximum length of the memory sequence (array starts at 0, so that counts. If this line is 2, then there are actually 3 positions to memorize initially)
+      static uint8_t GameMemoryTestStepPosition;      // Progress point in the sequence, where test is currently being evaluated
+      static uint8_t GameMemoryTestStepEnd;           // How many steps in the sequence have been completed successfully
+      static bool    GameMemoryTestStepComplete;  // A step in the sequence has been matched successfully
+      static bool    GameMemoryPartialComplete;   // A partial sequence has been matched successfully
+      static bool    GameMemoryTestStepWrong;
+      static bool    GameMemoryGameComplete;      // The whole game sequence has been matched successfully
+      static uint8_t GameMemorySequenceArray[GAME_MEMORY_SEQUENCE_MAX_LENGTH];
+      static uint8_t PixelToTurnOn = 0;
+      static bool      CoreMemoryIsTouched   = false;       // Register a touch
+      static bool      CoreMemoryWasTouched   = false;      // Flag to catch state transition
+      static uint8_t   CoreMemoryWhichIsTouched = 0;        // Keep track of which core is or was being touched
+      static uint8_t   CoreMemoryCountTouched = 0;          // Keep track of how many cores are being touched
+      static bool      CoreMemoryIsReleased  = true;        // Register a release
+      static bool      CoreMemoryJustReleased = false;      // Register JUST released for one time use
+      static uint16_t  CoreMemoryIsReleasedDebounce = 0;    // Keep track of how many times through this state the core is not touched.
+      static uint16_t  CoreMemoryIsReleasedThresh = 5;     // How many times through the loop to register cores as not touched.
+      // static bool      GameOKtoProceedToSeqStep   = false;  // Flag to indicate the correct core was touched in the sequence and move forward.
+
       if (ModeTimeoutFirstTimeRun) { 
         Serial.println(">>> Entered MODE_GAME_OF_MEMORY."); 
-        //ModeTimeOutCheckReset(); 
         ModeTimeoutFirstTimeRun = false; 
         IOExpanderSafeStates();
+        LEDClear();
+        LEDUpdate();        
+        GameMemoryState = 0;
       }
 
 
+      switch (GameMemoryState) {
+        case 0: {                                               // Clear variables and game start-up sparkle LEDs.
+          Serial.print(">>> MODE_GAME_OF_MEMORY state: ");
+          Serial.println(GameMemoryState); 
+          GameMemoryTestStepPosition = 0;
+          GameMemoryTestStepEnd = 0;
+          GameMemoryTestStepComplete = false;    
+          GameMemoryPartialComplete = false; 
+          GameMemoryGameComplete = false;    
+          CoreMemoryIsTouched   = false;   
+          CoreMemoryWasTouched   = false;  
+          CoreMemoryWhichIsTouched;    
+          CoreMemoryCountTouched = 0;      
+          CoreMemoryIsReleased  = true;    
+          CoreMemoryJustReleased = false;  
+          CoreMemoryIsReleasedDebounce = 0;
+          GameMemoryTestStepWrong = false;
+          // Twinkle the LEDs
+          for (uint8_t i = 0; i <= 50; i++) {
+            PixelToTurnOn = random(0, 4);
+            // Update the LED array
+            for (uint8_t j = 0; j < 4; j++) {
+              if (PixelToTurnOn == j) { LEDArray[j] = 1; }
+              else                    { LEDArray[j] = 0; }
+            }
+          LEDUpdate();        
+          delay(20);
+          LEDClear();
+          LEDUpdate();
+          delay(10);
+          }
+          LEDClear();
+          LEDUpdate();
+          delay(1000);
+          GameMemoryState = 1;
+          break;
+        }
 
+        case 1: {                                               // Generate all of the pixel positions for memory test.
+          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.println(GameMemoryState);
+          LEDClear();
+          LEDUpdate();
+          for (uint8_t i = 0; i < GameMemorySequenceLength; i++) {
+            GameMemorySequenceArray[i] = random(0, 4);
+          }
+          GameMemoryState = 2;
+          break; 
+        }
 
-      
+        case 2: {                                               // Show the pattern to memorize
+          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.println(GameMemoryState); 
+          Serial.print("    GameMemoryTestStepEnd "); 
+          Serial.print(GameMemoryTestStepEnd+1); 
+          Serial.print(" of "); 
+          Serial.print(GameMemorySequenceLength+1);
+          Serial.println(" possible."); 
+          Serial.print("    Pattern to match is: "); 
+          for (uint8_t i = 0; i <= GameMemoryTestStepEnd; i++) {
+            Serial.print(GameMemorySequenceArray[i]);
+            for (uint8_t j = 0; j < 4; j++) {
+              if (j == GameMemorySequenceArray[i]) { LEDArray[j] = 1; }
+              else                    { LEDArray[j] = 0; }
+            }
+            LEDUpdate();
+            delay(750);
+            LEDClear();
+            LEDUpdate();
+            delay(250);
+          }
+          Serial.println(); 
+          LEDClear();
+          LEDUpdate();       
+          GameMemoryState = 3;
+          break; 
+          }
+
+        case 3: {                                               // Wait, record touches, check for match up to GameMemoryPoints
+          // Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          // Serial.println(GameMemoryState);
+
+          // Scan the core matrix for a touch and show it
+          CoreMemoryCountTouched = 0;                           // Reset cores touched count to 0
+          for (uint8_t i = 0; i < 4; i++) {
+            CoreMemoryBitWrite(i,1);                            // Write all cores 1, 
+            CoreMemoryBitWrite(i,0);                            // write all cores back to 0.
+            LEDArray[i] = !CMSenseArray[i];                     // If core changed state as expected (CMSenseArray), set LEDArray position OFF.
+            if (LEDArray[i]) {                                  // If the pixel has a magnet touching it,
+              CoreMemoryWhichIsTouched = i;                     // keep track of the most recent and highest position is touched,
+              CoreMemoryCountTouched++;                         // update touch count.
+              Serial.print("    Pixel ");
+              Serial.print(i); 
+              Serial.print(" touched,");
+            }
+          }
+          LEDUpdate();
+
+          // Keep track of whether or not a core is touched, and debounce for a release, and flag "just released."
+          if (CoreMemoryCountTouched) {                         // If any cores are touched,
+            CoreMemoryIsTouched = true;                         // lock in touch flags
+            CoreMemoryWasTouched = true;
+            CoreMemoryIsReleased = false;
+          }
+          else {
+            CoreMemoryIsTouched = false;
+            CoreMemoryIsReleased = true;
+          }
+          if ( (CoreMemoryWasTouched) && (CoreMemoryIsReleased) ) {
+            CoreMemoryIsReleasedDebounce++;                     // increment the debounce counter 
+          }
+          else {
+            CoreMemoryIsReleasedDebounce = 0;                     // reset the debounce counter 
+          }
+          if (CoreMemoryIsReleasedDebounce > CoreMemoryIsReleasedThresh) {            // to make sure there really is no touch occurring.
+            CoreMemoryIsReleasedDebounce = 0;                 // Reset the debounce counter.
+            CoreMemoryWasTouched = false;
+            CoreMemoryJustReleased = true;                    // One time use below!
+          }
+
+          // If core was touched, and just released, was it the correct one?
+          if (CoreMemoryJustReleased) {
+            if (CoreMemoryWhichIsTouched == GameMemorySequenceArray[GameMemoryTestStepPosition] ) {  // Correct pixel for this step of the sequence!
+              Serial.print("GameMemoryTestStepPosition ");
+              Serial.print(GameMemoryTestStepPosition); 
+              Serial.print(" is correct with ");
+              Serial.println(CoreMemoryWhichIsTouched);
+              GameMemoryTestStepComplete = true;
+            }
+            else {                                                                                  // Wrong pixel touched!
+              Serial.print("GameMemoryTestStepPosition ");
+              Serial.print(GameMemoryTestStepPosition); 
+              Serial.print(" is wrong with ");
+              Serial.println(CoreMemoryWhichIsTouched);
+              GameMemoryTestStepComplete = false;
+              GameMemoryTestStepWrong = true;
+            }
+            CoreMemoryJustReleased = false;
+          }
+
+          if (GameMemoryTestStepComplete) {
+            GameMemoryTestStepPosition++;                                                        // Get ready to test the next pixel.
+            GameMemoryTestStepComplete = false;
+          }
+
+          if (GameMemoryTestStepPosition > GameMemoryTestStepEnd) {                              // Are we to the end of this sequence?
+            GameMemoryTestStepEnd++;                                                             // Expand the test sequence.
+            GameMemoryTestStepPosition = 0;                                                      // Reset test step position back to 0
+            LEDClear();
+            LEDUpdate();        
+            delay(750);
+            GameMemoryState = 2;                                                                 // Jump back to show the new extended sequence.
+          }
+          else {
+            GameMemoryState = 3;                                                                 // Otherwise, wait for the next input in this sequence
+          }
+          if (GameMemoryTestStepEnd > GameMemorySequenceLength) {                          // User got to the end of the whole sequence!
+            Serial.print(">>> YOU BEAT THE GAME OF MEMORY !!! "); 
+            if (GameMemorySequenceLength < 255){
+              GameMemorySequenceLength++;                                                         // Make the next sequence longer
+            }
+            GameMemoryState = 0;
+          }
+
+          if (GameMemoryTestStepWrong) {
+              GameMemoryState = 4;
+          }
+
+          break; 
+          }
+
+        case 4: {                                               // Wrong sequence! Fill screen and begin the game again.
+          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.println(GameMemoryState); 
+          for (uint8_t i = 0; i < 3; i++) {
+            LEDFill();
+            LEDUpdate();
+            delay(1000);
+            LEDClear();
+            LEDUpdate();        
+            delay(500);
+          }
+          GameMemoryState = 0;
+          break; 
+          }
+        default: { 
+          Serial.println(">>> Invalid state in MODE_GAME_OF_MEMORY."); 
+          break; 
+          }
+      }
       break;
     }
 
