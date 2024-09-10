@@ -10123,9 +10123,9 @@
 		)
 		(uuid "1b99a413-0499-4415-ab6b-bda98f049831")
 	)
-	(text "Shift LED connections up 2 pins, tying B3/4  to 7N/7P. \nThe order will look cleaner, and LED pixel numbering will match GPB numbers."
+	(text "TODO: Shift LED connections up 2 pins, tying B3/4\nto 7N/7P. The order will look cleaner, and LED\npixel numbering will match GPB numbers."
 		(exclude_from_sim no)
-		(at 306.578 293.37 0)
+		(at 312.674 225.806 0)
 		(effects
 			(font
 				(face "KiCad Font")
@@ -10677,9 +10677,9 @@
 		)
 		(uuid "b926d919-2ef6-4744-a1cc-ec95c286a051")
 	)
-	(text "CORE MATRIX"
+	(text "CORE\nMATRIX"
 		(exclude_from_sim no)
-		(at 306.07 82.55 0)
+		(at 335.026 86.614 0)
 		(effects
 			(font
 				(size 6 6)
@@ -11076,6 +11076,17 @@
 		)
 		(uuid "544efeee-201e-4826-9024-c79f75547308")
 	)
+	(label "XB1"
+		(at 332.74 115.57 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "55283efb-2ed3-4c69-8e07-32baf8d5e26d")
+	)
 	(label "CMDQ-1N"
 		(at 232.41 153.67 0)
 		(fields_autoplaced yes)
@@ -11229,6 +11240,17 @@
 			(justify left bottom)
 		)
 		(uuid "891b92cb-981d-4c92-9208-f79e6b4bcc38")
+	)
+	(label "XT0,1"
+		(at 332.74 83.82 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8a1c3cbd-9c0d-44fc-b721-d13d2885095a")
 	)
 	(label "LED_1"
 		(at 288.29 212.09 0)
@@ -11537,6 +11559,17 @@
 			(justify left bottom)
 		)
 		(uuid "ee737996-e61e-43c3-a0b2-9dfe8fd2220d")
+	)
+	(label "XB0"
+		(at 330.2 115.57 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f096a0e3-4d42-41c5-91f8-9d0088b4d69d")
 	)
 	(label "CMDQ-9N"
 		(at 288.29 222.25 0)
