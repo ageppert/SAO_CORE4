@@ -267,7 +267,6 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
   // Send it
   PortAUpdate(IOPortA);
   // Wait a tiny bit, but mostly not needed because the core flip happens in just under 1 us.
-  // delay(1);
   // Disable the Core Matrix
   IOPortA &= ~(1 << IO_PA_CORE_MATRIX_ENABLE_BIT);   // Clear the bit at position to 0
   // Send it
@@ -276,6 +275,7 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
   // Send it
   // Check for the sense signal and update the Core Matrix Sense array with the value
   CMSenseArray[pixel] = digitalRead(PIN_SAO_GPIO_2_SENSE);
+  delay(8); // Testing slow down to allow 3V3 rail to recover
 }
 
 void loop()
@@ -338,14 +338,14 @@ void loop()
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
-      delay(25);
+      // delay(25);
       // Write all core 1, and if they change state as expected, don't light up an LED.
       for (uint8_t i = 0; i < 4; i++) {
         CoreMemoryBitWrite(i,1);
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
-      delay(25);
+      // delay(25);
 
       if (ModeTimeOutCheck(15000)){ 
         ModeTimeOutCheckReset();
@@ -412,24 +412,6 @@ void loop()
           CoreMemoryJustReleased = false;  
           CoreMemoryIsReleasedDebounce = 0;
           GameMemoryTestStepWrong = false;
-          // Twinkle the LEDs (moved down into the randomizer)
-/*         for (uint8_t i = 0; i <= 50; i++) {
-            PixelToTurnOn = random(0, 4);
-            // Update the LED array
-            for (uint8_t j = 0; j < 4; j++) {
-              if (PixelToTurnOn == j) { LEDArray[j] = 1; }
-              else                    { LEDArray[j] = 0; }
-            }
-            LEDUpdate();        
-            delay(20);
-            LEDClear();
-            LEDUpdate();
-            delay(10);
-          }
-          LEDClear();
-          LEDUpdate();
-          delay(500);
-*/
           GameMemoryState = 1;
           break;
         }
@@ -488,9 +470,6 @@ void loop()
           }
 
         case 3: {                                               // Wait, record touches, check for match up to GameMemoryPoints
-          // Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
-          // Serial.println(GameMemoryState);
-
           // Scan the core matrix for a touch and show it
           CoreMemoryCountTouched = 0;                           // Reset cores touched count to 0
           for (uint8_t i = 0; i < 4; i++) {
