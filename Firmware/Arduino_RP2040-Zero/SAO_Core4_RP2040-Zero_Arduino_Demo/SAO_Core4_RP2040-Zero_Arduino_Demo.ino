@@ -27,20 +27,45 @@
       SAO_GPIO1 = unused, available
       SAO_GPIO2 = INPUT Core Matrix Sense, default low, unsensed
 */
-
-#define HARDWARE_VERSION_MAJOR  0
-#define HARDWARE_VERSION_MINOR  1
-#define HARDWARE_VERSION_PATCH  1
-#define MCU_FAMILY              RP2040
   /***************************************** CORE4 HARDWARE VERSION TABLE *******************************************
   | VERSION |  DATE      | MCU     | DESCRIPTION                                                                    |
   -------------------------------------------------------------------------------------------------------------------
-  |  0.1.0  | 2019-08-23 | RP2040  | First prototype, as built. Confusing row drive logic!
-  |  0.1.1  | 2019-08-31 | RP2040  | Rework 0.1.0, isolate GPB0/1 for 7N/7P, route GPB6/7 to 9N/9P, connect GPA6 
-  |         |            |         |   directly to CM_EN with JP25
-  |  0.2.0  | 2019-00-xx | RP2040  | WIP - not yet release - based on 0.1.1, reduce overall size, simplify.
+  |  0.1.0  | 2024-08-23 | RP2040  | First prototype, as built. Confusing row drive logic! Modified to 0.1.1 right away!
+  |  0.1.1  | 2024-08-31 | RP2040  | Rework 0.1.0, isolate GPB0/1 for 7N/7P, route GPB6/7 to 9N/9P, connect GPA6 
+  |         |            |         |   directly to CM_EN with JP25.
+  |  0.2.0  | 2024-10-01 | RP2040  | Reduce overall size, simplify. Move YL0s to GPB4/5. Shift LED1-4 up to GPB0-3.
   |         |            |         |
   -----------------------------------------------------------------------------------------------------------------*/
+// ------------------------------------
+// USER OPTIONS
+// ------------------------------------
+#define HWV_0_1_1                         // Choose the hardware version of SAO Core4 that you are using.
+//#define HWV_0_2_0                         // Choose the hardware version of SAO Core4 that you are using.
+#define NeoPixel_Enable                   // Setup for the RP2040-Zero used in my SAO Demo Controller.
+#define MCU_FAMILY              RP2040    // Keep track of what MCU this demo is set up for.
+
+// ------------------------------------
+// CONFIGURATIONS BASED ON USER OPTIONS
+// ------------------------------------
+#if defined HWV_0_1_1
+  #define HARDWARE_VERSION_MAJOR  0
+  #define HARDWARE_VERSION_MINOR  1
+  #define HARDWARE_VERSION_PATCH  1
+#elif defined HWV_0_2_0
+  #define HARDWARE_VERSION_MAJOR  0
+  #define HARDWARE_VERSION_MINOR  2
+  #define HARDWARE_VERSION_PATCH  0
+#else
+  #error ("Hardware version undefined or unsupported.")
+#endif
+
+#if defined NeoPixel_Enable
+  #include <Adafruit_NeoPixel.h>
+  #define PIN        16
+  #define NUMPIXELS   1
+  Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_RGB + NEO_KHZ800);
+  int ledState = 0;
+#endif
 
 #include <Wire.h>                           // RP204 Pico-Zero default I2C port is GPIO4 is SDA0, GPIO5 is SCL0
 #define IO_EXPANDER_ADDRESS         0x27    // SAO Core4 default MCP23017 address is 0x27
@@ -49,27 +74,55 @@
 #define IO_EXPANDER_REG_PORTA_DATA  0x12
 #define IO_EXPANDER_REG_PORTB_DATA  0x13
 static bool LEDArray[4] =  {0, 0, 0, 0};    // Default all four LEDs off.
-#define IO_PB_LED_ARRAY_START_BIT      2
-#define IO_PA_CORE_MATRIX_ENABLE_BIT   6
-#define IO_PA_SENSE_RESET_BIT          7
-uint8_t IOPortAInactive = 0b00101010;
-/*                          ||||||||__GPA0 : COLUMN Core Matrix Drive Transistor CMDQ-1N, XB0, default low, inactive
-                            |||||||___GPA1 : COLUMN Core Matrix Drive Transistor CMDQ-1P, XB0, default high, inactive
-                            ||||||____GPA2 : COLUMN Core Matrix Drive Transistor CMDQ-2N, XB1, default low, inactive
-                            |||||_____GPA3 : COLUMN Core Matrix Drive Transistor CMDQ-2P, XB1, default high, inactive
-                            ||||______GPA4 : COLUMN Core Matrix Drive Transistor CMDQ-3N, XT0,1, default low, inactive
-                            |||_______GPA5 : COLUMN Core Matrix Drive Transistor CMDQ-3P, XT0,1, default high, inactive
-                            ||________GPA6 : Core Matrix Enable, default low, inactive
-                            |_________GPA7 : Core Matrix Sense Reset, default low, inactive */
-uint8_t IOPortBInactive = 0b10000010;
-/*                          ||||||||__GPB0 : ROW Core Matrix Drive Transistor CMDQ-7N, YL0, default low, inactive
-                            |||||||___GPB1 : ROW Core Matrix Drive Transistor CMDQ-7P, YL0, default high, inactive
-                            ||||||____GPB2 : LED_1 / Pixel 0, default low, inactive
-                            |||||_____GPB3 : LED_2 / Pixel 1, default low, inactive
-                            ||||______GPB4 : LED_3 / Pixel 2, default low, inactive
-                            |||_______GPB5 : LED_4 / Pixel 3, default low, inactive
-                            ||________GPB6 : ROW Core Matrix Drive Transistor CMDQ-9N, YL1, default low, inactive
-                            |_________GPB7 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive */
+
+#if defined (HWV_0_1_1)
+  #define IO_PB_LED_ARRAY_START_BIT      2
+  #define IO_PA_CORE_MATRIX_ENABLE_BIT   6
+  #define IO_PA_SENSE_RESET_BIT          7
+  uint8_t IOPortAInactive = 0b00101010;
+  /*                          ||||||||__GPA0 : COLUMN Core Matrix Drive Transistor CMDQ-1N, XB0, default low, inactive
+                              |||||||___GPA1 : COLUMN Core Matrix Drive Transistor CMDQ-1P, XB0, default high, inactive
+                              ||||||____GPA2 : COLUMN Core Matrix Drive Transistor CMDQ-2N, XB1, default low, inactive
+                              |||||_____GPA3 : COLUMN Core Matrix Drive Transistor CMDQ-2P, XB1, default high, inactive
+                              ||||______GPA4 : COLUMN Core Matrix Drive Transistor CMDQ-3N, XT0,1, default low, inactive
+                              |||_______GPA5 : COLUMN Core Matrix Drive Transistor CMDQ-3P, XT0,1, default high, inactive
+                              ||________GPA6 : Core Matrix Enable, default low, inactive
+                              |_________GPA7 : Core Matrix Sense Reset, default low, inactive */
+  uint8_t IOPortBInactive = 0b10000010;
+  /*                          ||||||||__GPB0 : ROW Core Matrix Drive Transistor CMDQ-7N, YL0, default low, inactive
+                              |||||||___GPB1 : ROW Core Matrix Drive Transistor CMDQ-7P, YL0, default high, inactive
+                              ||||||____GPB2 : LED_1 / Pixel 0, default low, inactive
+                              |||||_____GPB3 : LED_2 / Pixel 1, default low, inactive
+                              ||||______GPB4 : LED_3 / Pixel 2, default low, inactive
+                              |||_______GPB5 : LED_4 / Pixel 3, default low, inactive
+                              ||________GPB6 : ROW Core Matrix Drive Transistor CMDQ-9N, YL1, default low, inactive
+                              |_________GPB7 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive */
+#elif defined (HWV_0_2_0)
+  #define IO_PB_LED_ARRAY_START_BIT      0
+  #define IO_PA_CORE_MATRIX_ENABLE_BIT   6
+  #define IO_PA_SENSE_RESET_BIT          7
+  uint8_t IOPortAInactive = 0b00101010;
+  /*                          ||||||||__GPA0 : COLUMN Core Matrix Drive Transistor CMDQ-1N, XB0, default low, inactive
+                              |||||||___GPA1 : COLUMN Core Matrix Drive Transistor CMDQ-1P, XB0, default high, inactive
+                              ||||||____GPA2 : COLUMN Core Matrix Drive Transistor CMDQ-2N, XB1, default low, inactive
+                              |||||_____GPA3 : COLUMN Core Matrix Drive Transistor CMDQ-2P, XB1, default high, inactive
+                              ||||______GPA4 : COLUMN Core Matrix Drive Transistor CMDQ-3N, XT0,1, default low, inactive
+                              |||_______GPA5 : COLUMN Core Matrix Drive Transistor CMDQ-3P, XT0,1, default high, inactive
+                              ||________GPA6 : Core Matrix Enable, default low, inactive
+                              |_________GPA7 : Core Matrix Sense Reset, default low, inactive */
+  uint8_t IOPortBInactive = 0b10100000;
+  /*                          ||||||||__GPB0 : LED_1 / Pixel 0, default low, inactive
+                              |||||||___GPB1 : LED_2 / Pixel 1, default low, inactive
+                              ||||||____GPB2 : LED_3 / Pixel 2, default low, inactive 
+                              |||||_____GPB3 : LED_4 / Pixel 3, default low, inactive 
+                              ||||______GPB4 : ROW Core Matrix Drive Transistor CMDQ-7N, YL0, default low, inactive
+                              |||_______GPB5 : ROW Core Matrix Drive Transistor CMDQ-7P, YL0, default high, inactive
+                              ||________GPB6 : ROW Core Matrix Drive Transistor CMDQ-9N, YL1, default low, inactive
+                              |_________GPB7 : ROW Core Matrix Drive Transistor CMDQ-9P, YL1, default high, inactive */
+#else
+  #error ("Hardware version undefined or unsupported.")
+#endif
+
 uint8_t IOPortA = IOPortAInactive;
 uint8_t IOPortB = IOPortBInactive;
 #define PIN_SAO_GPIO_1_MODE   26      // Configured as input for mode switching or general user use.
@@ -82,8 +135,8 @@ static uint8_t CMDColPA[4][2] = {
 //{0b00101010, 0b00101010}, default reference for each transistor to be inactive
   {0b00111000, 0b00001011}, 
   {0b00110010, 0b00001110},
-  {0b00111000, 0b00001011}, // TODO: update this row
-  {0b00110010, 0b00001110} // TODO: update this row
+  {0b00111000, 0b00001011},
+  {0b00110010, 0b00001110}
 /*     ||||||      ||||||__GPA0 : CMDQ-1N, XB0
        ||||||      |||||___GPA1 : CMDQ-1P, XB0
        ||||||      ||||____GPA2 : CMDQ-2N, XB1
@@ -100,24 +153,53 @@ static uint8_t CMDColPA[4][2] = {
          |             |______ to write a one
          |____________________ to write a zero */
 };
-static uint8_t CMDRowPB[4][2] {
-//{0b10000010, 0b10000010}, default reference for each transistor to be inactive
-  {0b00000011, 0b11000000},
-  {0b00000011, 0b11000000},
-  {0b11000000, 0b00000011},
-  {0b11000000, 0b00000011}
-/*   ||    ||    ||    ||__GPB0 : CMDQ-7N, YL0
-     ||    ||    ||    |___GPB1 : CMDQ-7P, YL0
-     ||    ||    ||________GPB6 : CMDQ-9N, YL1
-     ||    ||    |_________GPB7 : CMDQ-9P, YL1
-     ||    ||__GPB0 : CMDQ-7N, YL0
-     ||    |___GPB1 : CMDQ-7P, YL0
-     ||________GPB6 : CMDQ-9N, YL1
-     |_________GPB7 : CMDQ-9P, YL1
-     ________     ________
-         |             |______ to write a one
-         |____________________ to write a zero */
-};
+#if defined (HWV_0_1_1)
+  static uint8_t CMDRowPB[4][2] {
+  //{0b10000010, 0b10000010}, default reference for each transistor to be inactive
+    {0b00000011, 0b11000000},
+    {0b00000011, 0b11000000},
+    {0b11000000, 0b00000011},
+    {0b11000000, 0b00000011}
+  /*   ||    ||    ||    ||__GPB0 : CMDQ-7N, YL0
+       ||    ||    ||    |___GPB1 : CMDQ-7P, YL0
+       ||    ||    ||________GPB6 : CMDQ-9N, YL1
+       ||    ||    |_________GPB7 : CMDQ-9P, YL1
+       ||    ||__GPB0 : CMDQ-7N, YL0
+       ||    |___GPB1 : CMDQ-7P, YL0
+       ||________GPB6 : CMDQ-9N, YL1
+       |_________GPB7 : CMDQ-9P, YL1
+       ________     ________
+           |             |______ to write a one
+           |____________________ to write a zero */
+  };
+#elif defined (HWV_0_2_0)
+  static uint8_t CMDRowPB[4][2] {
+  //{0b10100000, 0b10100000}, default reference for each transistor to be inactive
+//    {0b00110000, 0b11000000},
+//    {0b00110000, 0b11000000},
+//    {0b11000000, 0b00110000},
+//    {0b11000000, 0b00110000}
+  //{0b10100000, 0b10100000}, default reference for each transistor to be inactive
+    {0b11000000, 0b00110000}, // 9N 7P, 9P 7N
+    {0b11000000, 0b00110000},
+    {0b00110000, 0b11000000},
+    {0b00110000, 0b11000000}
+  /*   ||||        ||||______GPB4 : CMDQ-7N, YL0
+       ||||        |||_______GPB5 : CMDQ-7P, YL0
+       ||||        ||________GPB6 : CMDQ-9N, YL1
+       ||||        |_________GPB7 : CMDQ-9P, YL1
+       ||||______GPB4 : CMDQ-7N, YL0
+       |||_______GPB5 : CMDQ-7P, YL0
+       ||________GPB6 : CMDQ-9N, YL1
+       |_________GPB7 : CMDQ-9P, YL1
+       ________     ________
+           |             |______ to write a one
+           |____________________ to write a zero */
+  };
+#else
+  #error ("Hardware version undefined or unsupported.")
+#endif
+
 enum TopLevelMode                       // Top Level Mode State Machine
 {
   MODE_INIT,
@@ -130,11 +212,13 @@ uint8_t  TopLevelMode = MODE_INIT;
 uint8_t  TopLevelModeDefault = MODE_DAZZLE;
 uint32_t ModeTimeoutDeltams = 0;
 uint32_t ModeTimeoutFirstTimeRun = true;
-
+uint8_t  CoreTestStart = 0; // Default (0) is to test all four.
+uint8_t  CoreTestLimit = 4; // Default (4) is to test all four.
 
 void setup()
 {
   // Nothing to see here. Everything runs in a simple state machine in the main loop function, and the bottom of this file.
+  // This makes the conversion to using VSCode slightly easier.
 }
 
 bool SerialInit() {
@@ -158,7 +242,7 @@ void IOExpanderSafeStates() {
 }
 
 bool IOExpanderInit() {
-  Serial.print(">>> INIT IO Expander started... ");
+  Serial.print("Core4: INIT IO Expander started... ");
   bool StatusIOExpander = 1;                      // default 0 = I2C MCP23017 not found, or 1 = I2C MCP23017 is found
   // TODO: detect MCP23017 and set status flag
   Wire.begin();                                   // wake up I2C bus, one time only
@@ -197,7 +281,7 @@ bool ModeTimeOutCheck (uint32_t ModeTimeoutLimitms) {
   ModeTimeoutDeltams = NowTimems-StartTimems;
   if (ModeTimeoutDeltams >= ModeTimeoutLimitms) {
     ModeTimeOutCheckReset();
-    Serial.print(">>> Mode timeout after ");
+    Serial.print("Core4: Mode timeout after ");
     Serial.print(ModeTimeoutLimitms);
     Serial.println(" ms.");
     return (true);
@@ -259,14 +343,16 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
   IOPortA |=  (1 << IO_PA_SENSE_RESET_BIT);   // Set the bit at position to 1
   // Send it
   PortAUpdate(IOPortA);
-  PortBUpdate(IOPortB);
+//  PortBUpdate(IOPortB);
   // Clear the sense latch (low)
   IOPortA &= ~(1 << IO_PA_SENSE_RESET_BIT);   // Clear the bit at position to 0
   // Enable the Core Matrix
   IOPortA |=  (1 << IO_PA_CORE_MATRIX_ENABLE_BIT);   // Set the bit at position to 1
   // Send it
   PortAUpdate(IOPortA);
+  PortBUpdate(IOPortB); // try setting port B, rows, later
   // Wait a tiny bit, but mostly not needed because the core flip happens in just under 1 us.
+  // delay(1);
   // Disable the Core Matrix
   IOPortA &= ~(1 << IO_PA_CORE_MATRIX_ENABLE_BIT);   // Clear the bit at position to 0
   // Send it
@@ -275,15 +361,27 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
   // Send it
   // Check for the sense signal and update the Core Matrix Sense array with the value
   CMSenseArray[pixel] = digitalRead(PIN_SAO_GPIO_2_SENSE);
-  delay(8); // Testing slow down to allow 3V3 rail to recover
+//  if (value == 1) {
+//    CMSenseArray[pixel] = digitalRead(PIN_SAO_GPIO_2_SENSE);
+//  }
+//  else {
+//    // Don't update the sense array on this polarity.
+//  }
+  delay(15); // Testing slow down to allow 3V3 rail to recover
 }
+
+// ****************************************************************************************************
+// ****************************************************************************************************
+//                                              MAIN LOOP
+// ****************************************************************************************************
+// ****************************************************************************************************
 
 void loop()
 {
   switch(TopLevelMode) {
     case MODE_INIT: {
       SerialInit();
-      Serial.println(">>> Entered MODE_INIT.");
+      Serial.println("Core4: Entered MODE_INIT.");
       IOExpanderInit();
       SAOGPIOPinInit();
       Serial.println("");
@@ -291,14 +389,31 @@ void loop()
       Serial.println("  | Welcome to the SAO Core4 Demo with Arduino IDE 2.3.2 using RP2040-Zero! | ");
       Serial.println("  |-------------------------------------------------------------------------| ");
       Serial.println("");
-      ModeTimeOutCheckReset(); 
+      Serial.print("### Firmware configured for hardware version: ");
+      Serial.print(HARDWARE_VERSION_MAJOR);
+      Serial.print(".");
+      Serial.print(HARDWARE_VERSION_MINOR);
+      Serial.print(".");
+      Serial.println(HARDWARE_VERSION_PATCH);
+      ModeTimeOutCheckReset();
+      #if defined NeoPixel_Enable
+        Serial.println("### NeoPixel enabled.");
+        pixels.begin();
+        pixels.clear();
+        pixels.show();
+      #endif
+      Serial.println("");
       TopLevelMode = TopLevelModeDefault;
-      Serial.println(">>> Leaving MODE_INIT.");
+      Serial.println("Core4: Leaving MODE_INIT.");
       break;
     }
 
     case MODE_DAZZLE: {
-      if (ModeTimeoutFirstTimeRun) { Serial.println(">>> Entered MODE_DAZZLE."); }
+      #if defined NeoPixel_Enable
+        pixels.setPixelColor(0, pixels.Color(0, 0, 0));
+        pixels.show();
+      #endif
+      if (ModeTimeoutFirstTimeRun) { Serial.println("Core4: Entered MODE_DAZZLE."); }
       static uint8_t PixelToTurnOn = 0;
       // Update the pixel to be turned on
       switch (PixelToTurnOn) {
@@ -314,52 +429,62 @@ void loop()
         else                    { LEDArray[i] = 0; }
       }
       LEDUpdate();        
-      delay(80);
+      delay(40);
+      #if defined NeoPixel_Enable
+        pixels.setPixelColor(0, pixels.Color(0, 100, 0));
+        pixels.show();
+      #endif
+      delay(40);
 
       if (ModeTimeOutCheck(3000)){ 
         ModeTimeOutCheckReset();
         LEDClear();
         LEDUpdate();
         TopLevelMode++; 
-        Serial.println(">>> Leaving MODE_DAZZLE.");
+        Serial.println("Core4: Leaving MODE_DAZZLE.");
       }
       break;
     }
 
     case MODE_FLUX_TEST: {
       if (ModeTimeoutFirstTimeRun) { 
-        Serial.println(">>> Entered MODE_FLUX_TEST."); 
+        Serial.println("Core4: Entered MODE_FLUX_TEST."); 
         ModeTimeoutFirstTimeRun = false;
         IOExpanderSafeStates();
         }
       // Write all core 0, and if they change state as expected, don't light up an LED.
-      for (uint8_t i = 0; i < 4; i++) {
+      for (uint8_t i = CoreTestStart; i < (CoreTestLimit); i++) {
         CoreMemoryBitWrite(i,0);
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
-      // delay(25);
       // Write all core 1, and if they change state as expected, don't light up an LED.
-      for (uint8_t i = 0; i < 4; i++) {
+      for (uint8_t i = CoreTestStart; i < (CoreTestLimit); i++) {
         CoreMemoryBitWrite(i,1);
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
-      // delay(25);
 
-      if (ModeTimeOutCheck(15000)){ 
-        ModeTimeOutCheckReset();
-        for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
-        LEDUpdate();
-        TopLevelMode = MODE_GAME_OF_MEMORY; 
-        Serial.println(">>> Leaving MODE_FLUX_TEST.");
-      }
+//      if (ModeTimeOutCheck(15000)){ 
+//        ModeTimeOutCheckReset();
+//        for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
+//        LEDUpdate();
+//        TopLevelMode = MODE_GAME_OF_MEMORY; 
+//        Serial.println("Core4: Leaving MODE_FLUX_TEST.");
+//      }
       
       // Check for SAO GPIO1 to go low and move to another mode.
-      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ){
-        Serial.println("Mode changed!");
-        TopLevelMode = MODE_GAME_OF_MEMORY;
-      }
+//      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ){
+//        Serial.println("Mode changed!");
+//        TopLevelMode = MODE_GAME_OF_MEMORY;
+//      }
+      #if defined NeoPixel_Enable
+        if (ledState == 0) { ledState = 5;}
+        else { ledState = 0;}
+        pixels.setPixelColor(0, pixels.Color(0, ledState, ledState));
+        pixels.show();
+        delay(25);
+      #endif
       break;
     }
 
@@ -386,7 +511,7 @@ void loop()
       // static bool      GameOKtoProceedToSeqStep   = false;  // Flag to indicate the correct core was touched in the sequence and move forward.
       
       if (ModeTimeoutFirstTimeRun) { 
-        Serial.println(">>> Entered MODE_GAME_OF_MEMORY."); 
+        Serial.println("Core4: Entered MODE_GAME_OF_MEMORY."); 
         ModeTimeoutFirstTimeRun = false; 
         IOExpanderSafeStates();
         LEDClear();
@@ -397,7 +522,7 @@ void loop()
 
       switch (GameMemoryState) {
         case 0: {                                               // Clear variables and game start-up sparkle LEDs.
-          Serial.print(">>> MODE_GAME_OF_MEMORY state: ");
+          Serial.print("Core4: MODE_GAME_OF_MEMORY state: ");
           Serial.println(GameMemoryState); 
           GameMemoryTestStepPosition = 0;
           GameMemoryTestStepEnd = 0;
@@ -417,7 +542,7 @@ void loop()
         }
 
         case 1: {                                               // Generate all of the pixel positions for memory test.
-          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.print("Core4: MODE_GAME_OF_MEMORY state: "); 
           Serial.println(GameMemoryState);
           LEDClear();
           LEDUpdate();
@@ -442,7 +567,7 @@ void loop()
         }
 
         case 2: {                                               // Show the pattern to memorize
-          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.print("Core4: MODE_GAME_OF_MEMORY state: "); 
           Serial.println(GameMemoryState); 
           Serial.print("    GameMemoryTestStepEnd "); 
           Serial.print(GameMemoryTestStepEnd+1); 
@@ -457,7 +582,7 @@ void loop()
               else                    { LEDArray[j] = 0; }
             }
             LEDUpdate();
-            delay(750);
+            delay(650);
             LEDClear();
             LEDUpdate();
             delay(250);
@@ -545,7 +670,7 @@ void loop()
             GameMemoryState = 3;                                                                 // Otherwise, wait for the next input in this sequence
           }
           if (GameMemoryTestStepEnd > GameMemorySequenceLength) {                          // User got to the end of the whole sequence!
-            Serial.print(">>> YOU BEAT THE GAME OF MEMORY !!! "); 
+            Serial.print("Core4: YOU BEAT THE GAME OF MEMORY !!! "); 
             if (GameMemorySequenceLength < 255){
               GameMemorySequenceLength++;                                                         // Make the next sequence longer
             }
@@ -560,7 +685,7 @@ void loop()
           }
 
         case 4: {                                               // Wrong sequence! Fill screen and begin the game again.
-          Serial.print(">>> MODE_GAME_OF_MEMORY state: "); 
+          Serial.print("Core4: MODE_GAME_OF_MEMORY state: "); 
           Serial.println(GameMemoryState); 
           for (uint8_t i = 0; i < 3; i++) {
             LEDFill();
@@ -575,26 +700,26 @@ void loop()
           }
         
         default: { 
-          Serial.println(">>> Invalid state in MODE_GAME_OF_MEMORY."); 
+          Serial.println("Core4: Invalid state in MODE_GAME_OF_MEMORY."); 
           break; 
           }
       }
 
       // Check for SAO GPIO1 to go low and move to another mode.
-      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ) {
-        Serial.println("Mode changed!");
-        TopLevelMode = MODE_GAME_OF_MEMORY;
-      }
+//      if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ) {
+//        Serial.println("Mode changed!");
+//        TopLevelMode = MODE_GAME_OF_MEMORY;
+//      }
       break;
     }
 
     case MODE_AT_THE_END_OF_TIME: {
-      Serial.println(">>> Stuck in the MODE_AT_THE_END_OF_TIME! <<<");
+      Serial.println("Core4: Stuck in the MODE_AT_THE_END_OF_TIME! <<<");
       break;
     }
 
     default: {
-      Serial.println(">>> Something is broken! <<<");
+      Serial.println("Core4: Something is broken! <<<");
       break;
     }
   }

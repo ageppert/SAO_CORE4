@@ -1,4 +1,4 @@
-24606328648264372
+24620138260713245
 Andy_Footprint_Library
 4960_ADA_REV_RGB_LED
 
@@ -50,6 +50,20 @@ Surface mounted pin header SMD 1x20 2.54mm single row style1 pin1 left
 28
 Andy_Footprint_Library
 Badgelife-SAOv169-BADGE-2x3
+Through hole straight IDC box header, 2x03, 2.54mm pitch, double rows
+Through hole IDC box header THT 2x03 2.54mm double row
+0
+6
+6
+Andy_Footprint_Library
+Badgelife-SAOv169-BADGE-2x3-Edge-Connect-no-front-text
+Through hole straight IDC box header, 2x03, 2.54mm pitch, double rows
+Through hole IDC box header THT 2x03 2.54mm double row
+0
+12
+6
+Andy_Footprint_Library
+Badgelife-SAOv169-BADGE-2x3-no-front-text
 Through hole straight IDC box header, 2x03, 2.54mm pitch, double rows
 Through hole IDC box header THT 2x03 2.54mm double row
 0
@@ -308,6 +322,13 @@ Integrated Circuit
 7
 7
 Andy_Footprint_Library
+Nunchuk-male
+https://belfuse.com/resources/drawings/stewartconnector/dr-stw-ss-74301-001-ss-74301-002-ss-74301-005.pdf
+RJ45 Vertical Shield LED Green Yellow
+0
+5
+5
+Andy_Footprint_Library
 OLED_Header_4PIN
 4-pin CPU fan Through hole pin header, e.g. for Wieson part number 2366C888-007 Molex 47053-1000, Foxconn HF27040-M1, Tyco 1470947-1 or equivalent, see http://www.formfactors.org/developer%5Cspecs%5Crev1_2_public.pdf
 pin header 4-pin CPU fan
@@ -385,6 +406,13 @@ test point wire loop
 1
 1
 Andy_Footprint_Library
+RP2040 Zero
+
+
+0
+46
+23
+Andy_Footprint_Library
 RPi_PicoW_SMD_TH
 Through hole straight pin header, 2x20, 2.54mm pitch, double rows
 Through hole pin header THT 2x20 2.54mm double row
@@ -406,12 +434,26 @@ Integrated Circuit
 8
 8
 Andy_Footprint_Library
+SMD4_SW_EVQP7J_PAN
+
+EVQ-P7J01P 
+0
+4
+4
+Andy_Footprint_Library
 SOIC-8_W3.9mm
 
 
 0
 8
 8
+Andy_Footprint_Library
+SOP65P640X110-16N
+
+
+0
+16
+16
 Andy_Footprint_Library
 Switch_SK12D07VG4
 
@@ -440,6 +482,20 @@ test point THT pad
 0
 1
 1
+Andy_Footprint_Library
+Tooling_Hole_JLCPCB
+Mounting Hole 2.2mm, M2, ISO14580
+mounting hole 2.2mm m2 iso14580
+0
+2
+1
+Andy_Footprint_Library
+Trimpot_RES3_91A_TTE
+
+91AR5KLF 
+0
+3
+3
 Andy_Footprint_Library
 core_4_6.75mm_square_front_facing
 Core Memory 8x8 Array by Andy Geppert
