@@ -9,7 +9,7 @@
 	*.kicad_prl
 	fp-info-cache
 # Other
-	.DS_Store
+	*.DS_Store
 Firmware/Arduino_RP2040-Zero/.DS_Store
 Electronic Design/SAO_Core4_V0.2 Design Files KiCAD 8/.DS_Store
 Datasheets/.DS_Store
@@ -27,3 +27,6 @@ Electronic Design/.DS_Store
 Electronic Design/SAO_Core4_V0.2 Manufacturing/.DS_Store
 Electronic Design/.DS_Store
 Electronic Design/.DS_Store
+.DS_Store
+.DS_Store
+.DS_Store
