@@ -41,7 +41,8 @@
 // ------------------------------------
 //#define HWV_0_1_1                         // Choose the hardware version of SAO Core4 that you are using.
 #define HWV_0_2_0                         // Choose the hardware version of SAO Core4 that you are using.
-//#define NeoPixel_Enable                   // Setup for the RP2040-Zero used in my SAO Demo Controller.
+#define NeoPixel_Enable                   // Setup for the RP2040-Zero used in my SAO Demo Controller.
+#define ENABLE_MEMORY_GAME                // After the blinky start-up sequence, and 15s in flux detector mode, begin the game of memory.
 #define MCU_FAMILY              RP2040    // Keep track of what MCU this demo is set up for.
 
 // ------------------------------------
@@ -326,31 +327,30 @@ void PortBUpdate (uint8_t data) {
   Wire.endTransmission();
 }
 
-void CoreMemoryBitWrite(uint8_t pixel, bool value) {
+void CoreMemoryBitWriteWithSense(uint8_t pixel, bool value) {
   // Set up row and column transistors
   IOPortA = CMDColPA[pixel][value];
   IOPortB = CMDRowPB[pixel][value];
   // Copy in the LED array status in Port to avoid just shutting them off.
   for (uint8_t j = 0; j < 4; j++) { 
     if (LEDArray[j]) {
-      IOPortB |=  (1 << (IO_PB_LED_ARRAY_START_BIT+j));   // Set the bit at position to 1
+      IOPortB |=  (1 << (IO_PB_LED_ARRAY_START_BIT+j));   // Set the bit at position j to 1
     }
     else {
-      IOPortB &= ~(1 << (IO_PB_LED_ARRAY_START_BIT+j));  // Clear the bit at position to 0
+      IOPortB &= ~(1 << (IO_PB_LED_ARRAY_START_BIT+j));  // Clear the bit at position j to 0
     }
   }
   // Reset the sense latch (high)
   IOPortA |=  (1 << IO_PA_SENSE_RESET_BIT);   // Set the bit at position to 1
   // Send it
   PortAUpdate(IOPortA);
-//  PortBUpdate(IOPortB);
+  PortBUpdate(IOPortB);
   // Clear the sense latch (low)
   IOPortA &= ~(1 << IO_PA_SENSE_RESET_BIT);   // Clear the bit at position to 0
   // Enable the Core Matrix
   IOPortA |=  (1 << IO_PA_CORE_MATRIX_ENABLE_BIT);   // Set the bit at position to 1
   // Send it
   PortAUpdate(IOPortA);
-  PortBUpdate(IOPortB); // try setting port B, rows, later
   // Wait a tiny bit, but mostly not needed because the core flip happens in just under 1 us.
   // delay(1);
   // Disable the Core Matrix
@@ -367,7 +367,7 @@ void CoreMemoryBitWrite(uint8_t pixel, bool value) {
 //  else {
 //    CMSenseArray[pixel] = digitalRead(PIN_SAO_GPIO_2_SENSE);
 //  }
-  delay(1); // Testing slow down to allow 3V3 rail to recover
+  delay(8); // Testing slow down to allow 3V3 rail to recover
 }
 
 // ****************************************************************************************************
@@ -454,25 +454,27 @@ void loop()
         }
       // Write all core 0, and if they change state as expected, don't light up an LED.
       for (uint8_t i = CoreTestStart; i < (CoreTestLimit); i++) {
-        CoreMemoryBitWrite(i,0);
+        CoreMemoryBitWriteWithSense(i,0);
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
       // Write all core 1, and if they change state as expected, don't light up an LED.
       for (uint8_t i = CoreTestStart; i < (CoreTestLimit); i++) {
-        CoreMemoryBitWrite(i,1);
+        CoreMemoryBitWriteWithSense(i,1);
         LEDArray[i] = !CMSenseArray[i];
       }
       LEDUpdate(); 
 
-//      if (ModeTimeOutCheck(15000)){ 
-//        ModeTimeOutCheckReset();
-//        for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
-//        LEDUpdate();
-//        TopLevelMode = MODE_GAME_OF_MEMORY; 
-//        Serial.println("Core4: Leaving MODE_FLUX_TEST.");
-//      }
-      
+#ifdef ENABLE_MEMORY_GAME
+     if (ModeTimeOutCheck(15000)){ 
+       ModeTimeOutCheckReset();
+       for (uint8_t i = 0; i < 4; i++) { LEDArray[i] = 0; }
+       LEDUpdate();
+       TopLevelMode = MODE_GAME_OF_MEMORY; 
+       Serial.println("Core4: Leaving MODE_FLUX_TEST.");
+     }
+#endif
+
       // Check for SAO GPIO1 to go low and move to another mode.
       if ( !digitalRead(PIN_SAO_GPIO_1_MODE) ){
         Serial.println("Mode changed!");
@@ -599,9 +601,9 @@ void loop()
           // Scan the core matrix for a touch and show it
           CoreMemoryCountTouched = 0;                           // Reset cores touched count to 0
           for (uint8_t i = 0; i < 4; i++) {
-            CoreMemoryBitWrite(i,1);                            // Write all cores 1, 
-            LEDArray[i] = !CMSenseArray[i];                     // If core changed state as expected (CMSenseArray), set LEDArray position OFF.
-            CoreMemoryBitWrite(i,0);                            // write all cores back to 0.
+            CoreMemoryBitWriteWithSense(i,1);                            // Write all cores 1, 
+//            LEDArray[i] = !CMSenseArray[i];                     // If core changed state as expected (CMSenseArray), set LEDArray position OFF.
+            CoreMemoryBitWriteWithSense(i,0);                            // write all cores back to 0.
             LEDArray[i] = !CMSenseArray[i];                     // If core changed state as expected (CMSenseArray), set LEDArray position OFF.
             if (LEDArray[i]) {                                  // If the pixel has a magnet touching it,
               CoreMemoryWhichIsTouched = i;                     // keep track of the most recent and highest position is touched,
@@ -612,7 +614,7 @@ void loop()
             }
           }
           LEDUpdate();
-          delay(20); // temp test
+//          delay(20); // temp test
 
           // Keep track of whether or not a core is touched, and debounce for a release, and flag "just released."
           if (CoreMemoryCountTouched) {                         // If any cores are touched,
